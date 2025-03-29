@@ -3,6 +3,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { toBoolean } from '../utils/boolean';
 import { JobsModule } from './jobs/jobs.module';
+import { SkillsModule } from './skills/skills.module';
 
 @Module({
   imports: [
@@ -25,6 +26,7 @@ import { JobsModule } from './jobs/jobs.module';
       inject: [ConfigService],
     }),
     JobsModule,
+    SkillsModule,
   ],
 })
 export class AppModule {}
