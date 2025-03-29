@@ -1,8 +1,8 @@
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 import { WorkType } from './enums/work-type.enum';
-import { Experience } from './enums/experience.enum';
 import { EmploymentType } from './enums/employemnt-type.enum';
-import { RequiredSkill } from './types/required-skill.type';
+import { ExperienceLevel } from './enums/experience-level.enum';
+import { RequiredSkill } from './classes/required-skill.class';
 
 @Entity()
 export class Job {
@@ -29,9 +29,9 @@ export class Job {
 
   @Column({
     type: 'enum',
-    enum: Experience,
+    enum: ExperienceLevel,
   })
-  experience: Experience;
+  experience: ExperienceLevel;
 
   @Column({
     type: 'enum',
