@@ -1,0 +1,5 @@
+export enum EmploymentType {
+  B2B = 'B2B',
+  PERMANENT = 'PERMANENT',
+  MANDATORY_CONTRACT = 'MANDATORY_CONTRACT',
+}
