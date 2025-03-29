@@ -3,8 +3,8 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import "../utils/boolean";
 import { toBoolean } from '../utils/boolean';
+import { JobsModule } from './jobs/jobs.module';
 
 @Module({
   imports: [
@@ -21,11 +21,12 @@ import { toBoolean } from '../utils/boolean';
         password: configService.get('DB_PASSWORD'),
         database: configService.get('DB_NAME'),
         entities: [__dirname + '/../**/*.entity{.ts,.js}'],
-        synchronize: toBoolean(configService.get("DB_SYNC")),
-        logging: toBoolean(configService.get("DB_LOGGING"))
+        synchronize: toBoolean(configService.get('DB_SYNC')),
+        logging: toBoolean(configService.get('DB_LOGGING')),
       }),
       inject: [ConfigService],
-    })
+    }),
+    JobsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
