@@ -1,8 +1,9 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { WorkType } from './enums/work-type.enum';
 import { EmploymentType } from './enums/employemnt-type.enum';
 import { ExperienceLevel } from './enums/experience-level.enum';
 import { RequiredSkill } from './classes/required-skill.class';
+import { FieldOfJob } from 'src/fields-of-jobs/field-of-job.entity';
 
 @Entity()
 export class Job {
@@ -13,6 +14,9 @@ export class Job {
   title: string;
 
   @Column()
+  alias: string;
+
+  @Column()
   description: string;
 
   @Column()
@@ -20,6 +24,9 @@ export class Job {
 
   @Column()
   maxSalary: number;
+
+  @ManyToOne(() => FieldOfJob, (field) => field.jobs)
+  fieldOfJob: FieldOfJob;
 
   @Column({
     type: 'enum',

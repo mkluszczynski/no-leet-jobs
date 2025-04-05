@@ -3,6 +3,7 @@ import {
   IsArray,
   IsEnum,
   IsInt,
+  IsLowercase,
   ValidateNested,
 } from 'class-validator';
 import { EmploymentType } from '../enums/employemnt-type.enum';
@@ -17,45 +18,61 @@ export class CreateJobDto {
   title: string;
 
   @ApiProperty()
+  @IsLowercase()
+  alias: string;
+
+  @ApiProperty()
   description: string;
 
+  @IsInt()
+  @Type(() => Number)
   @ApiProperty({
     type: 'number',
     minimum: 0,
   })
-  @IsInt()
-  @Type(() => Number)
   minSalary: number;
 
+  @IsInt()
+  @Type(() => Number)
   @ApiProperty({
     type: 'number',
     minimum: 0,
   })
-  @IsInt()
-  @Type(() => Number)
   maxSalary: number;
 
+  @IsEnum(WorkType)
   @ApiProperty({
     enum: WorkType,
   })
-  @IsEnum(WorkType)
   workType: WorkType;
 
+  @IsEnum(ExperienceLevel)
   @ApiProperty({
     enum: ExperienceLevel,
   })
-  @IsEnum(ExperienceLevel)
   experience: ExperienceLevel;
 
+  @IsEnum(EmploymentType)
   @ApiProperty({
     enum: EmploymentType,
   })
-  @IsEnum(EmploymentType)
   employmentType: EmploymentType;
 
   @IsArray()
   @ValidateNested()
   @ArrayMinSize(1)
   @Type(() => RequiredSkill)
+  @ApiProperty({
+    type: RequiredSkill,
+    isArray: true,
+    minItems: 1,
+    items: {
+      type: 'object',
+      properties: {
+        name: { type: 'string' },
+        level: { type: 'string' },
+      },
+    },
+  })
   requiredSkills: RequiredSkill[];
 }
