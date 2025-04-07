@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { RequiredSkill } from './required-skill.entity';
 
 @Entity()
 export class Skill {
@@ -7,4 +8,7 @@ export class Skill {
 
   @Column()
   name: string;
+
+  @OneToMany(() => RequiredSkill, (requiredSkill) => requiredSkill.skill)
+  requiredSkills: RequiredSkill[];
 }

@@ -1,9 +1,9 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, ManyToMany, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { WorkType } from './enums/work-type.enum';
 import { EmploymentType } from './enums/employemnt-type.enum';
 import { ExperienceLevel } from './enums/experience-level.enum';
-import { RequiredSkill } from './classes/required-skill.class';
 import { FieldOfJob } from 'src/fields-of-jobs/field-of-job.entity';
+import { RequiredSkill } from 'src/skills/required-skill.entity';
 
 @Entity()
 export class Job {
@@ -46,10 +46,6 @@ export class Job {
   })
   employmentType: EmploymentType;
 
-  @Column({
-    type: 'jsonb',
-    array: false,
-    default: [],
-  })
+  @ManyToMany(() => RequiredSkill, (requiredSkill) => requiredSkill.jobs)
   requiredSkills: RequiredSkill[];
 }

@@ -15,6 +15,7 @@
   "pnpm": {
     "onlyBuiltDependencies": [
       "@nestjs/core",
+      "@scarf/scarf",
       "sharp"
     ]
   }

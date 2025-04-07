@@ -11,7 +11,7 @@ import { ExperienceLevel } from '../enums/experience-level.enum';
 import { WorkType } from '../enums/work-type.enum';
 import { ApiProperty } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
-import { RequiredSkill } from '../classes/required-skill.class';
+import { RequiredSkill } from 'src/skills/required-skill.entity';
 
 export class CreateJobDto {
   @ApiProperty()
