@@ -1,5 +1,4 @@
 import {
-  ArrayMinSize,
   IsArray,
   IsEnum,
   IsInt,
@@ -9,16 +8,16 @@ import {
 import { EmploymentType } from '../enums/employemnt-type.enum';
 import { ExperienceLevel } from '../enums/experience-level.enum';
 import { WorkType } from '../enums/work-type.enum';
-import { ApiProperty } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
-import { RequiredSkill } from 'src/skills/required-skill.entity';
+import { ApiProperty } from '@nestjs/swagger';
+import { CreateRequiredSkillDto } from 'src/required-skills/dto/create-requreid-skill';
 
 export class CreateJobDto {
   @ApiProperty()
   title: string;
 
-  @ApiProperty()
   @IsLowercase()
+  @ApiProperty()
   alias: string;
 
   @ApiProperty()
@@ -60,19 +59,10 @@ export class CreateJobDto {
 
   @IsArray()
   @ValidateNested()
-  @ArrayMinSize(1)
-  @Type(() => RequiredSkill)
+  @Type(() => CreateRequiredSkillDto)
   @ApiProperty({
-    type: RequiredSkill,
+    type: CreateRequiredSkillDto,
     isArray: true,
-    minItems: 1,
-    items: {
-      type: 'object',
-      properties: {
-        name: { type: 'string' },
-        level: { type: 'string' },
-      },
-    },
   })
-  requiredSkills: RequiredSkill[];
+  requiredSkillsDto: CreateRequiredSkillDto[];
 }

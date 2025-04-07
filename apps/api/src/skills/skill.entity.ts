@@ -1,5 +1,5 @@
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
-import { RequiredSkill } from './required-skill.entity';
+import { RequiredSkill } from '../required-skills/required-skill.entity';
 
 @Entity()
 export class Skill {

@@ -8,7 +8,7 @@ import {
   Put,
 } from '@nestjs/common';
 import { SkillsService } from './skills.service';
-import { GetByIdParam } from 'src/utils/common/ByIdParam';
+import { IdParam } from 'src/utils/common/ByIdParam';
 import { ApiParam } from '@nestjs/swagger';
 import { CreateSkillDto } from './dto/create-skill.dto';
 
@@ -23,7 +23,7 @@ export class SkillsController {
 
   @Get(':id')
   @ApiParam({ name: 'id', type: Number })
-  getSkillById(@Param() params: GetByIdParam) {
+  getSkillById(@Param() params: IdParam) {
     return this.skillsService.getSkillById(+params.id);
   }
 
@@ -33,12 +33,12 @@ export class SkillsController {
   }
 
   @Put(':id')
-  updateSkill(@Param() params: GetByIdParam, @Body() dto: CreateSkillDto) {
+  updateSkill(@Param() params: IdParam, @Body() dto: CreateSkillDto) {
     return this.skillsService.updateSkillById(+params.id, dto);
   }
 
   @Delete(':id')
-  deleteSkill(@Param() params: GetByIdParam) {
+  deleteSkill(@Param() params: IdParam) {
     return this.skillsService.deleteSkillById(+params.id);
   }
 }

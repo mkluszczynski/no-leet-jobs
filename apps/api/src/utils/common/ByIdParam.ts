@@ -1,7 +1,7 @@
 import { IsInt } from 'class-validator';
 import { Type } from 'class-transformer';
 
-export class GetByIdParam {
+export class IdParam {
   @IsInt()
   @Type(() => Number)
   id: number;

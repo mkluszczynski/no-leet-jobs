@@ -4,6 +4,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { toBoolean } from '../utils/boolean';
 import { JobsModule } from './jobs/jobs.module';
 import { SkillsModule } from './skills/skills.module';
+import { RequiredSkillsModule } from './required-skills/required-skills.module';
 
 @Module({
   imports: [
@@ -27,6 +28,7 @@ import { SkillsModule } from './skills/skills.module';
     }),
     JobsModule,
     SkillsModule,
+    RequiredSkillsModule,
   ],
 })
 export class AppModule {}

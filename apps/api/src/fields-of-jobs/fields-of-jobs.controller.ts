@@ -1,7 +1,7 @@
 import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { FieldsOfJobsService } from './fields-of-jobs.service';
 import { FieldOfJob } from './field-of-job.entity';
-import { GetByIdParam } from 'src/utils/common/ByIdParam';
+import { IdParam } from 'src/utils/common/ByIdParam';
 import { CreateFieldOfJobDto } from './dto/create-field-of-job.dto';
 
 @Controller('fields-of-jobs')
@@ -14,7 +14,7 @@ export class FieldsOfJobsController {
   }
 
   @Get(':id')
-  getFieldById(@Param() params: GetByIdParam): Promise<FieldOfJob> {
+  getFieldById(@Param() params: IdParam): Promise<FieldOfJob> {
     return this.fieldsOfJobsService.getFieldById(params.id);
   }
 

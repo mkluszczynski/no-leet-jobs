@@ -3,7 +3,7 @@ import { JobsService } from './jobs.service';
 import { Job } from './job.entity';
 import { ApiParam } from '@nestjs/swagger';
 import { CreateJobDto } from './dto/create-job.dto';
-import { GetByIdParam } from 'src/utils/common/ByIdParam';
+import { IdParam } from 'src/utils/common/ByIdParam';
 
 @Controller('jobs')
 export class JobsController {
@@ -16,7 +16,7 @@ export class JobsController {
 
   @Get(':id')
   @ApiParam({ name: 'id', type: Number })
-  getJobById(@Param() params: GetByIdParam): Promise<Job> {
+  getJobById(@Param() params: IdParam): Promise<Job> {
     return this.jobsService.getJobById(+params.id);
   }
 

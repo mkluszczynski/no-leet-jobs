@@ -3,13 +3,15 @@ import { Repository } from 'typeorm';
 import { Job } from './job.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CreateJobDto } from './dto/create-job.dto';
-import { RequiredSkill } from './classes/required-skill.class';
+import { RequiredSkillsService } from 'src/required-skills/required-skills.service';
+import { CreateRequiredSkillDto } from 'src/required-skills/dto/create-requreid-skill';
 
 @Injectable()
 export class JobsService {
   constructor(
     @InjectRepository(Job)
     private readonly jobsRepository: Repository<Job>,
+    private readonly requiredSkillsService: RequiredSkillsService,
   ) {}
 
   getAllJobs(): Promise<Job[]> {
@@ -27,19 +29,14 @@ export class JobsService {
   }
 
   async createJobFromDto(dto: CreateJobDto): Promise<Job> {
-    const job = new Job();
+    const requiredSkills = await Promise.all(
+      dto.requiredSkillsDto.map((dto: CreateRequiredSkillDto) =>
+        this.requiredSkillsService.createRequiredSkillFromDto(dto),
+      ),
+    );
 
-    job.title = dto.title;
-    job.description = dto.description;
-    job.minSalary = dto.minSalary;
-    job.maxSalary = dto.maxSalary;
-    job.workType = dto.workType;
-    job.experience = dto.experience;
-    job.employmentType = dto.employmentType;
-    job.requiredSkills = dto.requiredSkills.map((skill: RequiredSkill) => ({
-      id: skill.id,
-      level: skill.level,
-    }));
+    const job = Job.fromDto(dto);
+    job.requiredSkills = requiredSkills;
 
     return this.jobsRepository.save(job);
   }
