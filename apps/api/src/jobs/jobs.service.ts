@@ -4,7 +4,7 @@ import { Job } from './job.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { JobDto } from './dto/job.dto';
 import { RequiredSkillsService } from 'src/required-skills/required-skills.service';
-import { CreateRequiredSkillDto } from 'src/required-skills/dto/create-requreid-skill';
+import { RequiredSkillDto } from 'src/required-skills/dto/requreid-skill.dto';
 import { FieldsOfJobsService } from 'src/fields-of-jobs/fields-of-jobs.service';
 
 @Injectable()
@@ -32,7 +32,7 @@ export class JobsService {
 
   async createJobFromDto(dto: JobDto): Promise<Job> {
     const requiredSkills = await Promise.all(
-      dto.requiredSkillsDto.map((dto: CreateRequiredSkillDto) =>
+      dto.requiredSkillsDto.map((dto: RequiredSkillDto) =>
         this.requiredSkillsService.createRequiredSkillFromDto(dto),
       ),
     );
@@ -52,7 +52,7 @@ export class JobsService {
     const job = await this.getJobById(jobId);
 
     const requiredSkills = await Promise.all(
-      dto.requiredSkillsDto.map((dto: CreateRequiredSkillDto) =>
+      dto.requiredSkillsDto.map((dto: RequiredSkillDto) =>
         this.requiredSkillsService.createRequiredSkillFromDto(dto),
       ),
     );

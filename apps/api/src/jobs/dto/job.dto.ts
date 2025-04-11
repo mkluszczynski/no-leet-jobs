@@ -10,7 +10,7 @@ import { ExperienceLevel } from '../enums/experience-level.enum';
 import { WorkType } from '../enums/work-type.enum';
 import { Type } from 'class-transformer';
 import { ApiProperty } from '@nestjs/swagger';
-import { CreateRequiredSkillDto } from 'src/required-skills/dto/create-requreid-skill';
+import { RequiredSkillDto } from 'src/required-skills/dto/requreid-skill.dto';
 
 export class JobDto {
   @ApiProperty()
@@ -64,10 +64,10 @@ export class JobDto {
 
   @IsArray()
   @ValidateNested()
-  @Type(() => CreateRequiredSkillDto)
+  @Type(() => RequiredSkillDto)
   @ApiProperty({
-    type: CreateRequiredSkillDto,
+    type: RequiredSkillDto,
     isArray: true,
   })
-  requiredSkillsDto: CreateRequiredSkillDto[];
+  requiredSkillsDto: RequiredSkillDto[];
 }

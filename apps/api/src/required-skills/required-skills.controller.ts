@@ -9,7 +9,7 @@ import {
 } from '@nestjs/common';
 import { RequiredSkillsService } from './required-skills.service';
 import { IdParam } from 'src/utils/common/ByIdParam';
-import { CreateRequiredSkillDto } from './dto/create-requreid-skill';
+import { RequiredSkillDto } from './dto/requreid-skill.dto';
 
 @Controller('required-skills')
 export class RequiredSkillsController {
@@ -26,14 +26,14 @@ export class RequiredSkillsController {
   }
 
   @Post()
-  async createRequiredSkill(@Body() dto: CreateRequiredSkillDto) {
+  async createRequiredSkill(@Body() dto: RequiredSkillDto) {
     return await this.requiredSkillsService.createRequiredSkillFromDto(dto);
   }
 
   @Put(':id')
   async updateRequiredSkill(
     @Param() params: IdParam,
-    @Body() dto: CreateRequiredSkillDto,
+    @Body() dto: RequiredSkillDto,
   ) {
     return await this.requiredSkillsService.updateRequiredSkillById(
       params.id,

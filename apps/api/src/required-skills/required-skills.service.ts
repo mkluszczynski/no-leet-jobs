@@ -2,7 +2,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { RequiredSkill } from 'src/required-skills/required-skill.entity';
 import { Repository } from 'typeorm';
-import { CreateRequiredSkillDto } from './dto/create-requreid-skill';
+import { RequiredSkillDto } from './dto/requreid-skill.dto';
 import { SkillsService } from 'src/skills/skills.service';
 
 @Injectable()
@@ -30,7 +30,7 @@ export class RequiredSkillsService {
   }
 
   async createRequiredSkillFromDto(
-    dto: CreateRequiredSkillDto,
+    dto: RequiredSkillDto,
   ): Promise<RequiredSkill> {
     const requiredSkill = new RequiredSkill();
     const skill = await this.skillsService.getSkillById(dto.skillId);
@@ -43,7 +43,7 @@ export class RequiredSkillsService {
 
   async updateRequiredSkillById(
     id: number,
-    dto: CreateRequiredSkillDto,
+    dto: RequiredSkillDto,
   ): Promise<RequiredSkill> {
     const requiredSkill = await this.getRequiredSkillById(id);
 

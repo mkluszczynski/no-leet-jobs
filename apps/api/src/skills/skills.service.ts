@@ -2,7 +2,7 @@ import { Repository } from 'typeorm';
 import { Skill } from './skill.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { CreateSkillDto } from './dto/create-skill.dto';
+import { CreateSkillDto } from './dto/skill.dto';
 
 @Injectable()
 export class SkillsService {

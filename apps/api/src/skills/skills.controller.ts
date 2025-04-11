@@ -10,7 +10,7 @@ import {
 import { SkillsService } from './skills.service';
 import { IdParam } from 'src/utils/common/ByIdParam';
 import { ApiParam } from '@nestjs/swagger';
-import { CreateSkillDto } from './dto/create-skill.dto';
+import { CreateSkillDto } from './dto/skill.dto';
 
 @Controller('skills')
 export class SkillsController {
