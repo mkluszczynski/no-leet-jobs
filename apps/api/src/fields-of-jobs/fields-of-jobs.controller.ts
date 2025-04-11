@@ -1,8 +1,16 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  Put,
+} from '@nestjs/common';
 import { FieldsOfJobsService } from './fields-of-jobs.service';
 import { FieldOfJob } from './field-of-job.entity';
 import { IdParam } from 'src/utils/common/ByIdParam';
-import { CreateFieldOfJobDto } from './dto/create-field-of-job.dto';
+import { FieldOfJobDto } from './dto/field-of-job.dto';
 
 @Controller('fields-of-jobs')
 export class FieldsOfJobsController {
@@ -19,7 +27,20 @@ export class FieldsOfJobsController {
   }
 
   @Post()
-  createField(@Body() dto: CreateFieldOfJobDto): Promise<FieldOfJob> {
+  createField(@Body() dto: FieldOfJobDto): Promise<FieldOfJob> {
     return this.fieldsOfJobsService.createFieldFromDto(dto);
+  }
+
+  @Put(':id')
+  updateField(
+    @Param() params: IdParam,
+    @Body() dto: FieldOfJobDto,
+  ): Promise<FieldOfJob> {
+    return this.fieldsOfJobsService.updateFieldFromDto(params.id, dto);
+  }
+
+  @Delete(':id')
+  deleteField(@Param() params: IdParam) {
+    return this.fieldsOfJobsService.deleteFieldById(params.id);
   }
 }

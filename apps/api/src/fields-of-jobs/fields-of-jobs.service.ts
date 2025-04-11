@@ -2,7 +2,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { FieldOfJob } from './field-of-job.entity';
 import { Repository } from 'typeorm';
-import { CreateFieldOfJobDto } from './dto/create-field-of-job.dto';
+import { FieldOfJobDto } from './dto/field-of-job.dto';
 
 @Injectable()
 export class FieldsOfJobsService {
@@ -23,12 +23,29 @@ export class FieldsOfJobsService {
     return field;
   }
 
-  async createFieldFromDto(dto: CreateFieldOfJobDto): Promise<FieldOfJob> {
+  async createFieldFromDto(dto: FieldOfJobDto): Promise<FieldOfJob> {
     const field = new FieldOfJob();
 
     field.name = dto.name;
     field.alias = dto.alias;
 
     return this.fieldsOfJobsRepository.save(field);
+  }
+
+  async updateFieldFromDto(
+    fieldId: number,
+    dto: FieldOfJobDto,
+  ): Promise<FieldOfJob> {
+    const field = await this.getFieldById(fieldId);
+
+    field.updateFromDto(dto);
+
+    return await this.fieldsOfJobsRepository.save(field);
+  }
+
+  async deleteFieldById(fieldId: number) {
+    const field = await this.getFieldById(fieldId);
+
+    await this.fieldsOfJobsRepository.remove(field);
   }
 }
