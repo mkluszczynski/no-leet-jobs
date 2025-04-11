@@ -4,9 +4,14 @@ import { JobsController } from './jobs.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Job } from './job.entity';
 import { RequiredSkillsModule } from 'src/required-skills/required-skills.module';
+import { FieldsOfJobsModule } from 'src/fields-of-jobs/fields-of-jobs.module';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Job]), RequiredSkillsModule],
+  imports: [
+    TypeOrmModule.forFeature([Job]),
+    RequiredSkillsModule,
+    FieldsOfJobsModule,
+  ],
   controllers: [JobsController],
   providers: [JobsService],
   exports: [JobsService],

@@ -35,11 +35,14 @@ export class RequiredSkillsController {
     @Param() params: IdParam,
     @Body() dto: CreateRequiredSkillDto,
   ) {
-    return await this.requiredSkillsService.updateRequiredSkill(params.id, dto);
+    return await this.requiredSkillsService.updateRequiredSkillById(
+      params.id,
+      dto,
+    );
   }
 
   @Delete(':id')
   async deleteRequiredSkill(@Param() params: IdParam) {
-    return await this.requiredSkillsService.deleteRequiredSkill(params.id);
+    return await this.requiredSkillsService.deleteRequiredSkillById(params.id);
   }
 }

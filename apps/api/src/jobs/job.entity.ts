@@ -10,7 +10,7 @@ import { EmploymentType } from './enums/employemnt-type.enum';
 import { ExperienceLevel } from './enums/experience-level.enum';
 import { FieldOfJob } from 'src/fields-of-jobs/field-of-job.entity';
 import { RequiredSkill } from 'src/required-skills/required-skill.entity';
-import { CreateJobDto } from './dto/create-job.dto';
+import { JobDto } from './dto/job.dto';
 
 @Entity()
 export class Job {
@@ -56,9 +56,7 @@ export class Job {
   @ManyToMany(() => RequiredSkill, (requiredSkill) => requiredSkill.jobs)
   requiredSkills: RequiredSkill[];
 
-  public static fromDto(
-    dto: Omit<CreateJobDto, 'requiredSkills' | 'fieldOfJob'>,
-  ) {
+  public static fromDto(dto: Omit<JobDto, 'requiredSkills' | 'fieldOfJob'>) {
     const job = new Job();
     job.title = dto.title;
     job.alias = dto.alias;
@@ -69,5 +67,16 @@ export class Job {
     job.experience = dto.experience;
     job.employmentType = dto.employmentType;
     return job;
+  }
+
+  public updateFromDto(dto: JobDto) {
+    this.title = dto.title;
+    this.alias = dto.alias;
+    this.description = dto.description;
+    this.minSalary = dto.minSalary;
+    this.maxSalary = dto.maxSalary;
+    this.experience = dto.experience;
+    this.employmentType = dto.employmentType;
+    return this;
   }
 }

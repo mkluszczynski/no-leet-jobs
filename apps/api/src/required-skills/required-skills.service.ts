@@ -41,7 +41,7 @@ export class RequiredSkillsService {
     return this.requiredSkillsRepository.save(requiredSkill);
   }
 
-  async updateRequiredSkill(
+  async updateRequiredSkillById(
     id: number,
     dto: CreateRequiredSkillDto,
   ): Promise<RequiredSkill> {
@@ -55,7 +55,7 @@ export class RequiredSkillsService {
     return this.requiredSkillsRepository.save(requiredSkill);
   }
 
-  async deleteRequiredSkill(id: number): Promise<void> {
+  async deleteRequiredSkillById(id: number): Promise<void> {
     const requiredSkill = await this.getRequiredSkillById(id);
 
     await this.requiredSkillsRepository.remove(requiredSkill);

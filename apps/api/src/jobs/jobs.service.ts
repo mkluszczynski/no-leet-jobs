@@ -2,9 +2,10 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { Job } from './job.entity';
 import { InjectRepository } from '@nestjs/typeorm';
-import { CreateJobDto } from './dto/create-job.dto';
+import { JobDto } from './dto/job.dto';
 import { RequiredSkillsService } from 'src/required-skills/required-skills.service';
 import { CreateRequiredSkillDto } from 'src/required-skills/dto/create-requreid-skill';
+import { FieldsOfJobsService } from 'src/fields-of-jobs/fields-of-jobs.service';
 
 @Injectable()
 export class JobsService {
@@ -12,6 +13,7 @@ export class JobsService {
     @InjectRepository(Job)
     private readonly jobsRepository: Repository<Job>,
     private readonly requiredSkillsService: RequiredSkillsService,
+    private readonly fieldOfJobsService: FieldsOfJobsService,
   ) {}
 
   getAllJobs(): Promise<Job[]> {
@@ -28,16 +30,47 @@ export class JobsService {
     return job;
   }
 
-  async createJobFromDto(dto: CreateJobDto): Promise<Job> {
+  async createJobFromDto(dto: JobDto): Promise<Job> {
     const requiredSkills = await Promise.all(
       dto.requiredSkillsDto.map((dto: CreateRequiredSkillDto) =>
         this.requiredSkillsService.createRequiredSkillFromDto(dto),
       ),
     );
 
+    const fieldOfJob = await this.fieldOfJobsService.getFieldById(
+      dto.fieldOfJobId,
+    );
+
     const job = Job.fromDto(dto);
     job.requiredSkills = requiredSkills;
+    job.fieldOfJob = fieldOfJob;
 
     return this.jobsRepository.save(job);
+  }
+
+  async updateJobFromDto(jobId: number, dto: JobDto) {
+    const job = await this.getJobById(jobId);
+
+    const requiredSkills = await Promise.all(
+      dto.requiredSkillsDto.map((dto: CreateRequiredSkillDto) =>
+        this.requiredSkillsService.createRequiredSkillFromDto(dto),
+      ),
+    );
+
+    const fieldOfJob = await this.fieldOfJobsService.getFieldById(
+      dto.fieldOfJobId,
+    );
+
+    job.updateFromDto(dto);
+    job.requiredSkills = requiredSkills;
+    job.fieldOfJob = fieldOfJob;
+
+    return await this.jobsRepository.save(job);
+  }
+
+  async deleteJobById(jobId: number) {
+    const job = await this.getJobById(jobId);
+
+    await this.jobsRepository.remove(job);
   }
 }

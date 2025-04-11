@@ -15,7 +15,7 @@ export class FieldsOfJobsService {
     return this.fieldsOfJobsRepository.find();
   }
 
-  async getFieldById(id: number): Promise<FieldOfJob | null> {
+  async getFieldById(id: number): Promise<FieldOfJob> {
     const field = await this.fieldsOfJobsRepository.findOne({ where: { id } });
 
     if (!field) throw new NotFoundException(`Field with ID ${id} not found`);
