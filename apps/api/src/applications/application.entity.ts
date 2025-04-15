@@ -1,4 +1,5 @@
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { ApplicationDto } from './dto/application.dto';
 
 @Entity()
 export class Application {
@@ -19,4 +20,25 @@ export class Application {
 
   @Column()
   createdAt: Date;
+
+  @Column()
+  resumePath: string;
+
+  public static fromDtoAndFileName(dto: ApplicationDto, filePath: string): Application {
+    const application = new Application();
+    application.firstName = dto.firstName;
+    application.lastName = dto.lastName;
+    application.email = dto.email;
+    application.phone = dto.phone;
+    application.createdAt = new Date();
+    application.resumePath = filePath;
+    return application;
+  }
+
+  updateFromDto(dto: ApplicationDto): void {
+    this.firstName = dto.firstName;
+    this.lastName = dto.lastName;
+    this.email = dto.email;
+    this.phone = dto.phone;
+  }
 }

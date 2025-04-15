@@ -5,6 +5,7 @@ import { toBoolean } from '../utils/boolean';
 import { JobsModule } from './jobs/jobs.module';
 import { SkillsModule } from './skills/skills.module';
 import { RequiredSkillsModule } from './required-skills/required-skills.module';
+import { ApplicationsModule } from './applications/applications.module';
 
 @Module({
   imports: [
@@ -29,6 +30,7 @@ import { RequiredSkillsModule } from './required-skills/required-skills.module';
     JobsModule,
     SkillsModule,
     RequiredSkillsModule,
+    ApplicationsModule
   ],
 })
 export class AppModule {}
