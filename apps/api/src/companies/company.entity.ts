@@ -12,14 +12,14 @@ export class Company {
   @Column()
   address: string;
 
-  @Column()
-  phoneNumber: string;
+  @Column({ nullable: true })
+  phoneNumber: string | null;
 
   @Column()
   email: string;
 
-  @Column()
-  website: string;
+  @Column({ nullable: true })
+  website: string | null;
 
   @Column()
   createdAt: Date;
@@ -31,9 +31,9 @@ export class Company {
     const company = new Company();
     company.name = dto.name;
     company.address = dto.address;
-    company.phoneNumber = dto.phoneNumber;
+    company.phoneNumber = dto.phoneNumber || null;
     company.email = dto.email;
-    company.website = dto.website;
+    company.website = dto.website || null;
     company.createdAt = new Date();
     company.updatedAt = new Date();
     return company;
@@ -42,9 +42,9 @@ export class Company {
   public updateFromDto(dto: CompanyDto): void {
     this.name = dto.name;
     this.address = dto.address;
-    this.phoneNumber = dto.phoneNumber;
+    this.phoneNumber = dto.phoneNumber || null;
     this.email = dto.email;
-    this.website = dto.website;
+    this.website = dto.website || null;
     this.updatedAt = new Date();
   }
 }

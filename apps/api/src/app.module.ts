@@ -7,6 +7,7 @@ import { SkillsModule } from './skills/skills.module';
 import { RequiredSkillsModule } from './required-skills/required-skills.module';
 import { ApplicationsModule } from './applications/applications.module';
 import { CompaniesModule } from './companies/companies.module';
+import { UsersModule } from './users/users.module';
 
 @Module({
   imports: [
@@ -33,6 +34,7 @@ import { CompaniesModule } from './companies/companies.module';
     RequiredSkillsModule,
     ApplicationsModule,
     CompaniesModule,
+    UsersModule,
   ],
 })
 export class AppModule {}

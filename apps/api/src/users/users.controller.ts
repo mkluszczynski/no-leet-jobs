@@ -1,0 +1,56 @@
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  Put,
+} from '@nestjs/common';
+import { UsersService } from './users.service';
+import { IdParam } from 'src/utils/common/ByIdParam';
+import { CreateUserDto } from './dto/create-user.dto';
+import { User } from './user.entity';
+import { UpdateUserDto } from './dto/update-user.dto';
+
+@Controller('users')
+export class UsersController {
+  constructor(private readonly usersService: UsersService) {}
+
+  @Get()
+  getAllUsers(): Promise<User[]> {
+    return this.usersService.getAllUsers();
+  }
+
+  @Get(':id')
+  getUserById(@Param() params: IdParam): Promise<User> {
+    return this.usersService.getUserById(params.id);
+  }
+
+  @Post()
+  createUser(@Body() dto: CreateUserDto): Promise<User> {
+    return this.usersService.createUser(dto);
+  }
+
+  @Put(':id')
+  updateUserById(
+    @Param() params: IdParam,
+    @Body() dto: UpdateUserDto,
+  ): Promise<User> {
+    return this.usersService.updateUserById(params.id, dto);
+  }
+
+  @Put(':id/avatar')
+  updateUserAvatarById(
+    @Param() params: IdParam,
+    @Body('file') file: Express.Multer.File,
+  ): Promise<User> {
+    //TODO: Upload file
+    return this.usersService.updateUserAvatarById(params.id, file);
+  }
+
+  @Delete(':id')
+  deleteUserById(@Param() params: IdParam): Promise<void> {
+    return this.usersService.deleteUserById(params.id);
+  }
+}
