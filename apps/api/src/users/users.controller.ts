@@ -12,10 +12,14 @@ import { IdParam } from 'src/utils/common/ByIdParam';
 import { CreateUserDto } from './dto/create-user.dto';
 import { User } from './user.entity';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { UploadService } from '@lib/upload';
 
 @Controller('users')
 export class UsersController {
-  constructor(private readonly usersService: UsersService) {}
+  constructor(
+    private readonly usersService: UsersService,
+    private readonly uploadService: UploadService,
+  ) {}
 
   @Get()
   getAllUsers(): Promise<User[]> {
@@ -45,12 +49,16 @@ export class UsersController {
     @Param() params: IdParam,
     @Body('file') file: Express.Multer.File,
   ): Promise<User> {
-    //TODO: Upload file
+    this.uploadService.uploadFile(file, ['avatars']);
     return this.usersService.updateUserAvatarById(params.id, file);
   }
 
   @Delete(':id')
-  deleteUserById(@Param() params: IdParam): Promise<void> {
-    return this.usersService.deleteUserById(params.id);
+  async deleteUserById(@Param() params: IdParam): Promise<void> {
+    const user = await this.usersService.getUserById(params.id);
+
+    this.uploadService.deleteFile(user.avatarPath);
+
+    return this.usersService.deleteUser(user);
   }
 }

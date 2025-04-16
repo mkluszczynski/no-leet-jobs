@@ -7,7 +7,7 @@
   "license": "UNLICENSED",
   "scripts": {
     "build": "nest build",
-    "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
+    "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\" \"libs/**/*.ts\"",
     "start": "nest start",
     "dev": "nest start --watch",
     "start:dev": "nest start --watch",
@@ -68,7 +68,8 @@
     ],
     "roots": [
       "src",
-      "utils"
+      "utils",
+      "<rootDir>/libs/"
     ],
     "testRegex": ".*\\.spec\\.ts$",
     "transform": {
@@ -78,6 +79,9 @@
       "**/*.(t|j)s"
     ],
     "coverageDirectory": "../coverage",
-    "testEnvironment": "node"
+    "testEnvironment": "node",
+    "moduleNameMapper": {
+      "^@lib/upload(|/.*)$": "<rootDir>/libs/upload/src/$1"
+    }
   }
 }

@@ -24,14 +24,14 @@ export class Application {
   @Column()
   resumePath: string;
 
-  public static fromDtoAndFileName(dto: ApplicationDto, filePath: string): Application {
+  public static fromDto(dto: ApplicationDto): Application {
     const application = new Application();
     application.firstName = dto.firstName;
     application.lastName = dto.lastName;
     application.email = dto.email;
     application.phone = dto.phone;
     application.createdAt = new Date();
-    application.resumePath = filePath;
+    application.resumePath = '';
     return application;
   }
 
