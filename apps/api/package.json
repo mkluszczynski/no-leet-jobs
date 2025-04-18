@@ -82,7 +82,8 @@
     "coverageDirectory": "../coverage",
     "testEnvironment": "node",
     "moduleNameMapper": {
-      "^@lib/upload(|/.*)$": "<rootDir>/libs/upload/src/$1"
+      "^@lib/upload(|/.*)$": "<rootDir>/libs/upload/src/$1",
+      "^@app/auth(|/.*)$": "<rootDir>/libs/auth/src/$1"
     }
   }
 }
