@@ -67,18 +67,13 @@ export class ApplicationsController {
       await this.applicationsService.createApplicationFromDto(dto);
 
     const time = newApplication.createdAt.getTime();
-
     const resumePath = await this.uploadService.uploadFile(file, [
       'resumes',
       time.toString(),
     ]);
 
     newApplication.resumePath = resumePath;
-
-    const updatedApplication =
-      this.applicationsService.updateApplication(newApplication);
-
-    return updatedApplication;
+    return this.applicationsService.updateApplication(newApplication);
   }
 
   @Put(':id')

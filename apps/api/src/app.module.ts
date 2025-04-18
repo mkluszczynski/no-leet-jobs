@@ -9,6 +9,8 @@ import { ApplicationsModule } from './applications/applications.module';
 import { CompaniesModule } from './companies/companies.module';
 import { UsersModule } from './users/users.module';
 import { UploadModule } from '@lib/upload';
+import { ServeStaticModule } from '@nestjs/serve-static';
+import { join } from 'path';
 
 @Module({
   imports: [
@@ -29,6 +31,13 @@ import { UploadModule } from '@lib/upload';
         logging: toBoolean(configService.get('DB_LOGGING')),
       }),
       inject: [ConfigService],
+    }),
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '..', '..', 'uploads'),
+      serveRoot: '/uploads',
+      serveStaticOptions: {
+        extensions: ['.pdf', '.jpg', '.jpeg', '.png'],
+      },
     }),
     JobsModule,
     SkillsModule,
