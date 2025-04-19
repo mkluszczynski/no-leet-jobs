@@ -39,6 +39,7 @@ export class Company {
     return company;
   }
 
+  // TODO: Refactor to use UpdateCompanyDto
   public updateFromDto(dto: CompanyDto): void {
     this.name = dto.name;
     this.address = dto.address;

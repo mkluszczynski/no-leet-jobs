@@ -1,16 +1,18 @@
+import { AuthModule } from '@app/auth';
+import { UploadModule } from '@lib/upload';
 import { Module } from '@nestjs/common';
-import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { ServeStaticModule } from '@nestjs/serve-static';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { join } from 'path';
 import { toBoolean } from '../utils/boolean';
-import { JobsModule } from './jobs/jobs.module';
-import { SkillsModule } from './skills/skills.module';
-import { RequiredSkillsModule } from './required-skills/required-skills.module';
 import { ApplicationsModule } from './applications/applications.module';
 import { CompaniesModule } from './companies/companies.module';
+import { JobsModule } from './jobs/jobs.module';
+import { RequiredSkillsModule } from './required-skills/required-skills.module';
+import { SkillsModule } from './skills/skills.module';
 import { UsersModule } from './users/users.module';
-import { UploadModule } from '@lib/upload';
-import { ServeStaticModule } from '@nestjs/serve-static';
-import { join } from 'path';
+import { AccountsModule } from './accounts/accounts.module';
 
 @Module({
   imports: [
@@ -45,7 +47,9 @@ import { join } from 'path';
     ApplicationsModule,
     CompaniesModule,
     UsersModule,
+    AuthModule,
     UploadModule,
+    AccountsModule,
   ],
 })
 export class AppModule {}

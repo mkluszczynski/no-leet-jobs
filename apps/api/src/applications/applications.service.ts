@@ -3,14 +3,12 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Application } from './application.entity';
 import { ApplicationDto } from './dto/application.dto';
-import { UploadService } from '@lib/upload';
 
 @Injectable()
 export class ApplicationsService {
   constructor(
     @InjectRepository(Application)
     private readonly applicationRepository: Repository<Application>,
-    private readonly uploadService: UploadService,
   ) {}
 
   async getAllApplications(): Promise<Application[]> {

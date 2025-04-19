@@ -1,6 +1,6 @@
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
-import { UpdateUserDto } from './dto/update-user.dto';
 import { CreateUserDto } from './dto/create-user.dto';
+import { UpdateUserDto } from './dto/update-user.dto';
 
 @Entity()
 export class User {
@@ -24,6 +24,9 @@ export class User {
 
   @Column({ default: false })
   isPublic: boolean;
+
+  // @OneToOne(() => Account, (account) => account.user)
+  // account: Account;
 
   @Column()
   createdAt: Date;
