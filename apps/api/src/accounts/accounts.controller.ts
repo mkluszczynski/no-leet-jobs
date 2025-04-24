@@ -16,7 +16,10 @@ import { UpdateAccountDto } from './dto/update-account.dto';
 import { HashService } from '@app/hash';
 import { RegisterUserAccountDto } from './dto/register-user-account.dto';
 import { RegisterCompanyAccountDto } from './dto/register-company-account.dto';
+import { ApiBearerAuth } from '@nestjs/swagger';
+import { Public } from '@app/auth/decorators/public.decorator';
 
+@ApiBearerAuth()
 @Controller('accounts')
 export class AccountsController {
   constructor(
@@ -36,6 +39,7 @@ export class AccountsController {
     return this.accountsService.getAccountById(params.id);
   }
 
+  @Public()
   @Post('/register/user')
   async createUserAccount(
     @Body() dto: RegisterUserAccountDto,
@@ -46,6 +50,7 @@ export class AccountsController {
     return account;
   }
 
+  @Public()
   @Post('/register/company')
   async createCompanyAccount(
     @Body() dto: RegisterCompanyAccountDto,

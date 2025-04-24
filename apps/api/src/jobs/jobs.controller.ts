@@ -9,14 +9,17 @@ import {
 } from '@nestjs/common';
 import { JobsService } from './jobs.service';
 import { Job } from './job.entity';
-import { ApiParam } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiParam } from '@nestjs/swagger';
 import { JobDto } from './dto/job.dto';
 import { IdParam } from 'src/utils/common/ByIdParam';
+import { Public } from '@app/auth/decorators/public.decorator';
 
+@ApiBearerAuth()
 @Controller('jobs')
 export class JobsController {
   constructor(private readonly jobsService: JobsService) {}
 
+  @Public()
   @Get()
   getAllJobs(): Promise<Job[]> {
     return this.jobsService.getAllJobs();

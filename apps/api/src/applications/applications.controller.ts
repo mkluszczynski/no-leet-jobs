@@ -15,9 +15,10 @@ import { ApplicationsService } from './applications.service';
 import { IdParam } from 'src/utils/common/ByIdParam';
 import { ApplicationDto } from './dto/application.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { ApiConsumes } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiConsumes } from '@nestjs/swagger';
 import { UploadService } from '@lib/upload';
 
+@ApiBearerAuth()
 @Controller('applications')
 export class ApplicationsController {
   constructor(

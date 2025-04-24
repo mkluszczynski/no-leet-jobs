@@ -9,18 +9,22 @@ import {
 } from '@nestjs/common';
 import { SkillsService } from './skills.service';
 import { IdParam } from 'src/utils/common/ByIdParam';
-import { ApiParam } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiParam } from '@nestjs/swagger';
 import { CreateSkillDto } from './dto/skill.dto';
+import { Public } from '@app/auth/decorators/public.decorator';
 
+@ApiBearerAuth()
 @Controller('skills')
 export class SkillsController {
   constructor(private readonly skillsService: SkillsService) {}
 
+  @Public()
   @Get()
   getAlllSkills() {
     return this.skillsService.getAllSkills();
   }
 
+  @Public()
   @Get(':id')
   @ApiParam({ name: 'id', type: Number })
   getSkillById(@Param() params: IdParam) {

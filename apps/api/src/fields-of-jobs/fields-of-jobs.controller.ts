@@ -11,7 +11,9 @@ import { FieldsOfJobsService } from './fields-of-jobs.service';
 import { FieldOfJob } from './field-of-job.entity';
 import { IdParam } from 'src/utils/common/ByIdParam';
 import { FieldOfJobDto } from './dto/field-of-job.dto';
+import { ApiBearerAuth } from '@nestjs/swagger';
 
+@ApiBearerAuth()
 @Controller('fields-of-jobs')
 export class FieldsOfJobsController {
   constructor(private readonly fieldsOfJobsService: FieldsOfJobsService) {}

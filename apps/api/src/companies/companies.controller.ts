@@ -10,11 +10,15 @@ import {
 import { CompaniesService } from './companies.service';
 import { IdParam } from 'src/utils/common/ByIdParam';
 import { CompanyDto } from './dto/company.dto';
+import { ApiBearerAuth } from '@nestjs/swagger';
+import { Public } from '@app/auth/decorators/public.decorator';
 
+@ApiBearerAuth()
 @Controller('companies')
 export class CompaniesController {
   constructor(private readonly companiesService: CompaniesService) {}
 
+  @Public()
   @Get()
   getAllCompanies() {
     return this.companiesService.getAllCompanies();

@@ -10,16 +10,21 @@ import {
 import { RequiredSkillsService } from './required-skills.service';
 import { IdParam } from 'src/utils/common/ByIdParam';
 import { RequiredSkillDto } from './dto/requreid-skill.dto';
+import { ApiBearerAuth } from '@nestjs/swagger';
+import { Public } from '@app/auth/decorators/public.decorator';
 
+@ApiBearerAuth()
 @Controller('required-skills')
 export class RequiredSkillsController {
   constructor(private readonly requiredSkillsService: RequiredSkillsService) {}
 
+  @Public()
   @Get()
   async getAll() {
     return await this.requiredSkillsService.getAllRequiredSkills();
   }
 
+  @Public()
   @Get(':id')
   async getById(@Param() params: IdParam) {
     return await this.requiredSkillsService.getRequiredSkillById(params.id);

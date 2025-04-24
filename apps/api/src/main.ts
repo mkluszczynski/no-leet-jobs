@@ -12,6 +12,7 @@ async function bootstrap() {
   const swaggerConfig = new DocumentBuilder()
     .setTitle('NoLeetJobs API')
     .setVersion('1.0')
+    .addBearerAuth()
     .build();
 
   const documentFactory = () =>
