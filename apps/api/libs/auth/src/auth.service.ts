@@ -1,21 +1,38 @@
-import { Injectable } from '@nestjs/common';
-import { UsersService } from 'src/users/users.service';
+import { HashService } from '@app/hash';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { JwtService } from '@nestjs/jwt';
+import { AccountsService } from 'src/accounts/accounts.service';
 
 @Injectable()
 export class AuthService {
-  constructor(private readonly usersService: UsersService) {}
+  constructor(
+    private readonly accountsService: AccountsService,
+    private readonly hashService: HashService,
+    private readonly jwtService: JwtService,
+  ) {}
 
-  // validateUser(email: string, password: string): Promise<any> {}
+  private async validateUser(
+    email: string,
+    password: string,
+  ): Promise<boolean> {
+    const account = await this.accountsService.getAccountByEmail(email);
 
-  // async login(loginDto: LoginDto): Promise<any> {
-  //   const { email, password } = loginDto;
-  //   const user = await this.validateUser(email, password);
+    const isMatch = await this.hashService.comperePassword(
+      password,
+      account.password,
+    );
 
-  //   if (!user) {
-  //     throw new UnauthorizedException();
-  //   }
+    return isMatch;
+  }
 
-  //   // Implement JWT token generation logic here
-  //   return { access_token: 'your_jwt_token' };
-  // }
+  async logIn(email: string, password: string): Promise<string> {
+    const isValid = await this.validateUser(email, password);
+
+    if (!isValid) {
+      throw new UnauthorizedException('Invalid email or password');
+    }
+
+    const token = this.jwtService.sign({ email });
+    return token;
+  }
 }

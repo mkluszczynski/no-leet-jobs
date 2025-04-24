@@ -29,6 +29,12 @@
       ],
       "@app/auth/*": [
         "libs/auth/src/*"
+      ],
+      "@app/hash": [
+        "libs/hash/src"
+      ],
+      "@app/hash/*": [
+        "libs/hash/src/*"
       ]
     }
   }

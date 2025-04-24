@@ -29,6 +29,16 @@ export class AccountsService {
     return account;
   }
 
+  async getAccountByEmail(email: string): Promise<Account> {
+    const account = await this.accountRepository.findOneBy({ email });
+
+    if (!account) {
+      throw new NotFoundException(`Account with email ${email} not found`);
+    }
+
+    return account;
+  }
+
   async createUserAccount(dto: CreateAccountDto, user: User): Promise<Account> {
     const newAccount = Account.fromDto(dto);
 
