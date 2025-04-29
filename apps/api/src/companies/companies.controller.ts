@@ -1,12 +1,4 @@
-import {
-  Body,
-  Controller,
-  Delete,
-  Get,
-  Param,
-  Post,
-  Put,
-} from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Put } from '@nestjs/common';
 import { CompaniesService } from './companies.service';
 import { IdParam } from 'src/utils/common/ByIdParam';
 import { CompanyDto } from './dto/company.dto';
@@ -27,11 +19,6 @@ export class CompaniesController {
   @Get(':id')
   getCompanyById(@Param() params: IdParam) {
     return this.companiesService.getCompanyById(params.id);
-  }
-
-  @Post()
-  createCompany(@Body() dto: CompanyDto) {
-    return this.companiesService.createCompanyFromDto(dto);
   }
 
   @Put(':id')

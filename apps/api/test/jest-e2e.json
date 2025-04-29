@@ -16,6 +16,8 @@
     "@app/auth/(.*)": "<rootDir>/../libs/auth/src/$1",
     "@app/auth": "<rootDir>/../libs/auth/src",
     "@app/hash/(.*)": "<rootDir>/../libs/hash/src/$1",
-    "@app/hash": "<rootDir>/../libs/hash/src"
+    "@app/hash": "<rootDir>/../libs/hash/src",
+    "@app/casl/(.*)": "<rootDir>/../libs/casl/src/$1",
+    "@app/casl": "<rootDir>/../libs/casl/src"
   }
 }

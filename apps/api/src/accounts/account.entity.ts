@@ -1,12 +1,4 @@
-import { Company } from 'src/companies/company.entity';
-import { User } from 'src/users/user.entity';
-import {
-  Column,
-  Entity,
-  JoinColumn,
-  OneToOne,
-  PrimaryGeneratedColumn,
-} from 'typeorm';
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 import { CreateAccountDto } from './dto/create-account.dto';
 import { Role } from './enums/role.enum';
 import { UpdateAccountDto } from './dto/update-account.dto';
@@ -28,14 +20,6 @@ export class Account {
     nullable: true,
   })
   role: Role | null;
-
-  @JoinColumn()
-  @OneToOne(() => User, { nullable: true, onDelete: 'CASCADE' })
-  user: User | null;
-
-  @JoinColumn()
-  @OneToOne(() => Company, { nullable: true, onDelete: 'CASCADE' })
-  company: Company | null;
 
   @Column({
     type: 'timestamp',

@@ -41,27 +41,22 @@ export class AccountsController {
 
   @Public()
   @Post('/register/user')
-  async createUserAccount(
-    @Body() dto: RegisterUserAccountDto,
-  ): Promise<Account> {
-    const user = await this.usersService.createUserFromDto(dto);
+  async createUserAccount(@Body() dto: RegisterUserAccountDto): Promise<void> {
+    await this.checkAccountExistsByEmail(dto.email);
     dto.password = await this.hashService.hashPassword(dto.password);
-    const account = await this.accountsService.createUserAccount(dto, user);
-    return account;
+    const account = await this.accountsService.createUserAccount(dto);
+    await this.usersService.createUserFromDtoAndAccount(dto, account);
   }
 
   @Public()
   @Post('/register/company')
   async createCompanyAccount(
     @Body() dto: RegisterCompanyAccountDto,
-  ): Promise<Account> {
-    const company = await this.companiesService.createCompanyFromDto(dto);
+  ): Promise<void> {
+    await this.checkAccountExistsByEmail(dto.email);
     dto.password = await this.hashService.hashPassword(dto.password);
-    const account = await this.accountsService.createCompanyAccount(
-      dto,
-      company,
-    );
-    return account;
+    const account = await this.accountsService.createCompanyAccount(dto);
+    await this.companiesService.createCompanyFromDtoAndAccount(dto, account);
   }
 
   @Put(':id')
@@ -79,5 +74,12 @@ export class AccountsController {
   @Delete(':id')
   async deleteAccountById(@Param() params: IdParam): Promise<void> {
     await this.accountsService.deleteAccountById(params.id);
+  }
+
+  private async checkAccountExistsByEmail(email: string): Promise<void> {
+    const account = await this.accountsService.dosesAccountExistByEmail(email);
+    if (account) {
+      throw new Error(`Account with email ${email} already exists`);
+    }
   }
 }

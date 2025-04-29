@@ -1,10 +1,25 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  OneToMany,
+  OneToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 import { CompanyDto } from './dto/company.dto';
+import { Job } from 'src/jobs/job.entity';
+import { Account } from 'src/accounts/account.entity';
 
 @Entity()
 export class Company {
   @PrimaryGeneratedColumn()
   id: number;
+
+  @JoinColumn()
+  @OneToOne(() => Account, {
+    onDelete: 'CASCADE',
+  })
+  account: Account;
 
   @Column()
   name: string;
@@ -26,6 +41,9 @@ export class Company {
 
   @Column()
   updatedAt: Date;
+
+  @OneToMany(() => Job, (job) => job.company, { onDelete: 'CASCADE' })
+  jobs: Job[];
 
   public static fromDto(dto: CompanyDto): Company {
     const company = new Company();

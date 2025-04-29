@@ -1,15 +1,6 @@
-import {
-  Body,
-  Controller,
-  Delete,
-  Get,
-  Param,
-  Post,
-  Put,
-} from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Put } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { IdParam } from 'src/utils/common/ByIdParam';
-import { CreateUserDto } from './dto/create-user.dto';
 import { User } from './user.entity';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UploadService } from '@lib/upload';
@@ -31,11 +22,6 @@ export class UsersController {
   @Get(':id')
   getUserById(@Param() params: IdParam): Promise<User> {
     return this.usersService.getUserById(params.id);
-  }
-
-  @Post()
-  createUser(@Body() dto: CreateUserDto): Promise<User> {
-    return this.usersService.createUserFromDto(dto);
   }
 
   @Put(':id')

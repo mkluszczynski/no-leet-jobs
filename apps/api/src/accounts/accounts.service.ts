@@ -1,7 +1,5 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Company } from 'src/companies/company.entity';
-import { User } from 'src/users/user.entity';
 import { Repository } from 'typeorm';
 import { Account } from './account.entity';
 import { CreateAccountDto } from './dto/create-account.dto';
@@ -39,25 +37,25 @@ export class AccountsService {
     return account;
   }
 
-  async createUserAccount(dto: CreateAccountDto, user: User): Promise<Account> {
+  async dosesAccountExistByEmail(email: string): Promise<boolean> {
+    const account = await this.accountRepository.findOneBy({ email });
+    return !!account;
+  }
+
+  async createAccount(dto: CreateAccountDto, role: Role): Promise<Account> {
     const newAccount = Account.fromDto(dto);
 
-    newAccount.role = Role.USER;
-    newAccount.user = user;
+    newAccount.role = role;
 
     return this.accountRepository.save(newAccount);
   }
 
-  async createCompanyAccount(
-    dto: CreateAccountDto,
-    company: Company,
-  ): Promise<Account> {
-    const newAccount = Account.fromDto(dto);
+  async createUserAccount(dto: CreateAccountDto): Promise<Account> {
+    return this.createAccount(dto, Role.USER);
+  }
 
-    newAccount.role = Role.COMPANY;
-    newAccount.company = company;
-
-    return this.accountRepository.save(newAccount);
+  async createCompanyAccount(dto: CreateAccountDto): Promise<Account> {
+    return this.createAccount(dto, Role.COMPANY);
   }
 
   async updateAccountById(id: number, dto: UpdateAccountDto): Promise<Account> {

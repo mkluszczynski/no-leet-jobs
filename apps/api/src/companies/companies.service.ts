@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Company } from './company.entity';
 import { CompanyDto } from './dto/company.dto';
+import { Account } from 'src/accounts/account.entity';
 
 @Injectable()
 export class CompaniesService {
@@ -25,8 +26,24 @@ export class CompaniesService {
     return company;
   }
 
-  async createCompanyFromDto(dto: CompanyDto): Promise<Company> {
+  async getCompanyByAccountId(accountId: number): Promise<Company> {
+    const company = await this.companyRepository.findOne({
+      where: { account: { id: accountId } },
+    });
+    if (!company) {
+      throw new NotFoundException(
+        `Company with account id ${accountId} not found`,
+      );
+    }
+    return company;
+  }
+
+  async createCompanyFromDtoAndAccount(
+    dto: CompanyDto,
+    account: Account,
+  ): Promise<Company> {
     const company = Company.fromDto(dto);
+    company.account = account;
     return this.companyRepository.save(company);
   }
 

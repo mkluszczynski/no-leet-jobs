@@ -1,6 +1,8 @@
 import {
   Column,
   Entity,
+  JoinColumn,
+  JoinTable,
   ManyToMany,
   ManyToOne,
   PrimaryGeneratedColumn,
@@ -11,6 +13,7 @@ import { ExperienceLevel } from './enums/experience-level.enum';
 import { FieldOfJob } from 'src/fields-of-jobs/field-of-job.entity';
 import { RequiredSkill } from 'src/required-skills/required-skill.entity';
 import { JobDto } from './dto/job.dto';
+import { Company } from 'src/companies/company.entity';
 
 @Entity()
 export class Job {
@@ -32,9 +35,6 @@ export class Job {
   @Column()
   maxSalary: number;
 
-  @ManyToOne(() => FieldOfJob, (field) => field.jobs)
-  fieldOfJob: FieldOfJob;
-
   @Column({
     type: 'enum',
     enum: WorkType,
@@ -53,9 +53,21 @@ export class Job {
   })
   employmentType: EmploymentType;
 
+  @ManyToOne(() => FieldOfJob, (field) => field.jobs)
+  fieldOfJob: FieldOfJob;
+
+  @JoinTable()
   @ManyToMany(() => RequiredSkill, (requiredSkill) => requiredSkill.jobs)
   requiredSkills: RequiredSkill[];
 
+  @JoinColumn()
+  @ManyToOne(() => Company, (company) => company.jobs, {
+    nullable: true,
+    onDelete: 'CASCADE',
+  })
+  company: Company | null;
+
+  //TODO: Refactor to separated dtos
   public static fromDto(dto: Omit<JobDto, 'requiredSkills' | 'fieldOfJob'>) {
     const job = new Job();
     job.title = dto.title;

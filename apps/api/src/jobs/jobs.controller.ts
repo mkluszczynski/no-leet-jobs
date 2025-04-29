@@ -6,6 +6,7 @@ import {
   Param,
   Post,
   Put,
+  Req,
 } from '@nestjs/common';
 import { JobsService } from './jobs.service';
 import { Job } from './job.entity';
@@ -13,6 +14,7 @@ import { ApiBearerAuth, ApiParam } from '@nestjs/swagger';
 import { JobDto } from './dto/job.dto';
 import { IdParam } from 'src/utils/common/ByIdParam';
 import { Public } from '@app/auth/decorators/public.decorator';
+import { AuthorizeJobEdit } from '@app/auth/decorators/authorize-job-edit.decorator';
 
 @ApiBearerAuth()
 @Controller('jobs')
@@ -21,7 +23,8 @@ export class JobsController {
 
   @Public()
   @Get()
-  getAllJobs(): Promise<Job[]> {
+  getAllJobs(@Req() req): Promise<Job[]> {
+    console.log('user', req.user);
     return this.jobsService.getAllJobs();
   }
 
@@ -37,6 +40,7 @@ export class JobsController {
   }
 
   @Put(':id')
+  @AuthorizeJobEdit()
   @ApiParam({ name: 'id', type: Number })
   async updateJob(@Param() params: IdParam, @Body() dto: JobDto): Promise<Job> {
     return await this.jobsService.updateJobFromDto(+params.id, dto);

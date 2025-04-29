@@ -1,11 +1,24 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  OneToMany,
+  OneToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { Application } from 'src/applications/application.entity';
+import { Account } from 'src/accounts/account.entity';
 
 @Entity()
 export class User {
   @PrimaryGeneratedColumn()
   id: number;
+
+  @JoinColumn()
+  @OneToOne(() => Account, { onDelete: 'CASCADE' })
+  account: Account;
 
   @Column({ nullable: true })
   avatarPath: string | null;
@@ -25,8 +38,10 @@ export class User {
   @Column({ default: false })
   isPublic: boolean;
 
-  // @OneToOne(() => Account, (account) => account.user)
-  // account: Account;
+  @OneToMany(() => Application, (application) => application.user, {
+    nullable: true,
+  })
+  applications: Application[];
 
   @Column()
   createdAt: Date;

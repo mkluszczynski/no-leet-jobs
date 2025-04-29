@@ -1,5 +1,12 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 import { ApplicationDto } from './dto/application.dto';
+import { User } from 'src/users/user.entity';
 
 @Entity()
 export class Application {
@@ -23,6 +30,13 @@ export class Application {
 
   @Column()
   resumePath: string;
+
+  @JoinColumn()
+  @ManyToOne(() => User, (user) => user.applications, {
+    nullable: true,
+    onDelete: 'CASCADE',
+  })
+  user: User | null;
 
   public static fromDto(dto: ApplicationDto): Application {
     const application = new Application();

@@ -35,6 +35,12 @@
       ],
       "@app/hash/*": [
         "libs/hash/src/*"
+      ],
+      "@app/casl": [
+        "libs/casl/src"
+      ],
+      "@app/casl/*": [
+        "libs/casl/src/*"
       ]
     }
   }

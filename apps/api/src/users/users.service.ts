@@ -5,6 +5,7 @@ import { Repository } from 'typeorm';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { join } from 'path';
+import { Account } from 'src/accounts/account.entity';
 
 @Injectable()
 export class UsersService {
@@ -27,8 +28,12 @@ export class UsersService {
     return user;
   }
 
-  createUserFromDto(dto: CreateUserDto): Promise<User> {
+  createUserFromDtoAndAccount(
+    dto: CreateUserDto,
+    account: Account,
+  ): Promise<User> {
     const user = User.fromDto(dto);
+    user.account = account;
     return this.userRepository.save(user);
   }
 
