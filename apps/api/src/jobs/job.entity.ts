@@ -5,6 +5,7 @@ import {
   JoinTable,
   ManyToMany,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { WorkType } from './enums/work-type.enum';
@@ -14,6 +15,7 @@ import { FieldOfJob } from 'src/fields-of-jobs/field-of-job.entity';
 import { RequiredSkill } from 'src/required-skills/required-skill.entity';
 import { JobDto } from './dto/job.dto';
 import { Company } from 'src/companies/company.entity';
+import { Application } from 'src/applications/application.entity';
 
 @Entity()
 export class Job {
@@ -66,6 +68,9 @@ export class Job {
     onDelete: 'CASCADE',
   })
   company: Company | null;
+
+  @OneToMany(() => Application, (application) => application.job)
+  applications: Application[];
 
   //TODO: Refactor to separated dtos
   public static fromDto(dto: Omit<JobDto, 'requiredSkills' | 'fieldOfJob'>) {

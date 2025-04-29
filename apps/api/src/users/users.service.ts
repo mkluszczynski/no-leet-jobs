@@ -28,6 +28,37 @@ export class UsersService {
     return user;
   }
 
+  getUserByAccountId(accountId: number): Promise<User> {
+    const user = this.userRepository.findOne({
+      where: { account: { id: accountId } },
+    });
+    if (!user) {
+      throw new NotFoundException(
+        `User with account id ${accountId} not found`,
+      );
+    }
+    return user;
+  }
+
+  getUserByAccountEmail(email: string): Promise<User> {
+    const user = this.userRepository.findOne({
+      where: { account: { email } },
+    });
+
+    if (!user) {
+      throw new NotFoundException(`User with email ${email} not found`);
+    }
+
+    return user;
+  }
+
+  tryGetUserByEmail(email: string): Promise<User | null> {
+    if (!email) return null;
+    return this.userRepository.findOne({
+      where: { account: { email } },
+    });
+  }
+
   createUserFromDtoAndAccount(
     dto: CreateUserDto,
     account: Account,

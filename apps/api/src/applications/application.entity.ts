@@ -7,6 +7,7 @@ import {
 } from 'typeorm';
 import { ApplicationDto } from './dto/application.dto';
 import { User } from 'src/users/user.entity';
+import { Job } from 'src/jobs/job.entity';
 
 @Entity()
 export class Application {
@@ -37,6 +38,10 @@ export class Application {
     onDelete: 'CASCADE',
   })
   user: User | null;
+
+  @JoinColumn()
+  @ManyToOne(() => Job, (job) => job.applications, { onDelete: 'CASCADE' })
+  job: Job;
 
   public static fromDto(dto: ApplicationDto): Application {
     const application = new Application();

@@ -8,7 +8,11 @@ import { APP_GUARD } from '@nestjs/core';
 import { AuthGuard } from './guards/auth.guard';
 import { JobsModule } from 'src/jobs/jobs.module';
 import { CompaniesModule } from 'src/companies/companies.module';
-import { JobEditAuthorizationGuard } from './guards/job-edit-authorization.guard';
+import { JobEditGuard } from './guards/job-edit.guard';
+import { RolesGuard } from './guards/require-role.guard';
+import { ApplicationEditGuard } from './guards/application-edit.guard';
+import { UsersModule } from 'src/users/users.module';
+import { ApplicationsModule } from 'src/applications/applications.module';
 
 @Module({
   imports: [
@@ -18,9 +22,10 @@ import { JobEditAuthorizationGuard } from './guards/job-edit-authorization.guard
       secret: process.env.JWT_SECRET || 'secret',
       signOptions: { expiresIn: '1h' },
     }),
-    AccountsModule,
     JobsModule,
     CompaniesModule,
+    UsersModule,
+    ApplicationsModule,
   ],
   controllers: [AuthController],
   providers: [
@@ -31,7 +36,15 @@ import { JobEditAuthorizationGuard } from './guards/job-edit-authorization.guard
     },
     {
       provide: APP_GUARD,
-      useClass: JobEditAuthorizationGuard,
+      useClass: RolesGuard,
+    },
+    {
+      provide: APP_GUARD,
+      useClass: JobEditGuard,
+    },
+    {
+      provide: APP_GUARD,
+      useClass: ApplicationEditGuard,
     },
   ],
   exports: [AuthService],

@@ -48,6 +48,10 @@ export class JobsService {
     return this.jobsRepository.save(job);
   }
 
+  async saveJob(job: Job): Promise<Job> {
+    return this.jobsRepository.save(job);
+  }
+
   async updateJobFromDto(jobId: number, dto: JobDto) {
     const job = await this.getJobById(jobId);
 

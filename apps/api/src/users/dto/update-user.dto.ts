@@ -4,24 +4,39 @@ import { IsBoolean, IsEmail, IsOptional, IsPhoneNumber } from 'class-validator';
 export class UpdateUserDto {
   @IsEmail()
   @IsOptional()
-  @ApiProperty()
+  @ApiProperty({
+    description: 'The email of the user',
+    example: 'user@mkluszczynski.dev',
+  })
   email?: string;
 
   @IsOptional()
-  @ApiProperty()
+  @ApiProperty({
+    description: 'The first name of the user',
+    example: 'John',
+  })
   firstName?: string;
 
   @IsOptional()
-  @ApiProperty()
+  @ApiProperty({
+    description: 'The last name of the user',
+    example: 'Doe',
+  })
   lastName?: string;
 
   @IsPhoneNumber()
   @IsOptional()
-  @ApiProperty()
+  @ApiProperty({
+    description: 'The phone number of the user',
+    example: '+48123456789',
+  })
   phoneNumber?: string;
 
   @IsBoolean()
   @IsOptional()
-  @ApiProperty()
+  @ApiProperty({
+    description: 'Indicates if the user is public',
+    example: true,
+  })
   isPublic?: boolean;
 }

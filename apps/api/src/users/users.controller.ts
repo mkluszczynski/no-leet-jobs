@@ -5,6 +5,7 @@ import { User } from './user.entity';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UploadService } from '@lib/upload';
 import { ApiBearerAuth } from '@nestjs/swagger';
+import { RequireRole } from '@app/auth/decorators/require-role.decorator';
 
 @ApiBearerAuth()
 @Controller('users')
@@ -15,11 +16,13 @@ export class UsersController {
   ) {}
 
   @Get()
+  @RequireRole()
   getAllUsers(): Promise<User[]> {
     return this.usersService.getAllUsers();
   }
 
   @Get(':id')
+  @RequireRole()
   getUserById(@Param() params: IdParam): Promise<User> {
     return this.usersService.getUserById(params.id);
   }

@@ -13,19 +13,31 @@ import { ApiProperty } from '@nestjs/swagger';
 import { RequiredSkillDto } from 'src/required-skills/dto/requreid-skill.dto';
 
 export class JobDto {
-  @ApiProperty()
+  @ApiProperty({
+    description: 'The title of the job',
+    example: 'Software Engineer',
+  })
   title: string;
 
   @IsLowercase()
-  @ApiProperty()
+  @ApiProperty({
+    description: 'The alias of the job',
+    example: 'software-engineer',
+  })
   alias: string;
 
-  @ApiProperty()
+  @ApiProperty({
+    description: 'The description of the job',
+    example: 'We are looking for a software engineer to join our team.',
+  })
   description: string;
 
   @IsInt()
   @Type(() => Number)
-  @ApiProperty()
+  @ApiProperty({
+    description: 'The ID job field.',
+    example: 1,
+  })
   fieldOfJobId: number;
 
   @IsInt()
@@ -33,6 +45,8 @@ export class JobDto {
   @ApiProperty({
     type: 'number',
     minimum: 0,
+    description: 'The minimum salary for the job',
+    example: 7000,
   })
   minSalary: number;
 
@@ -41,24 +55,32 @@ export class JobDto {
   @ApiProperty({
     type: 'number',
     minimum: 0,
+    description: 'The maximum salary for the job',
+    example: 9000,
   })
   maxSalary: number;
 
   @IsEnum(WorkType)
   @ApiProperty({
     enum: WorkType,
+    description: 'The type of work for the job',
+    example: WorkType.FULL_TIME,
   })
   workType: WorkType;
 
   @IsEnum(ExperienceLevel)
   @ApiProperty({
     enum: ExperienceLevel,
+    description: 'The experience level required for the job',
+    example: ExperienceLevel.JUNIOR,
   })
   experience: ExperienceLevel;
 
   @IsEnum(EmploymentType)
   @ApiProperty({
     enum: EmploymentType,
+    description: 'The employment type for the job',
+    example: EmploymentType.PERMANENT,
   })
   employmentType: EmploymentType;
 

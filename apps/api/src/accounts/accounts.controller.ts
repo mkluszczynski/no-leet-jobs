@@ -1,5 +1,6 @@
 import {
   Body,
+  ConflictException,
   Controller,
   Delete,
   Get,
@@ -79,7 +80,7 @@ export class AccountsController {
   private async checkAccountExistsByEmail(email: string): Promise<void> {
     const account = await this.accountsService.dosesAccountExistByEmail(email);
     if (account) {
-      throw new Error(`Account with email ${email} already exists`);
+      throw new ConflictException(`Account with email ${email} already exists`);
     }
   }
 }

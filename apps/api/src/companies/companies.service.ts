@@ -38,6 +38,16 @@ export class CompaniesService {
     return company;
   }
 
+  async getCompanyByAccountEmail(email: string): Promise<Company> {
+    const company = await this.companyRepository.findOne({
+      where: { account: { email } },
+    });
+    if (!company) {
+      throw new NotFoundException(`Company with email ${email} not found`);
+    }
+    return company;
+  }
+
   async createCompanyFromDtoAndAccount(
     dto: CompanyDto,
     account: Account,

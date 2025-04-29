@@ -12,6 +12,7 @@ import { IdParam } from 'src/utils/common/ByIdParam';
 import { ApiBearerAuth, ApiParam } from '@nestjs/swagger';
 import { CreateSkillDto } from './dto/skill.dto';
 import { Public } from '@app/auth/decorators/public.decorator';
+import { RequireRole } from '@app/auth/decorators/require-role.decorator';
 
 @ApiBearerAuth()
 @Controller('skills')
@@ -20,7 +21,7 @@ export class SkillsController {
 
   @Public()
   @Get()
-  getAlllSkills() {
+  getAllSkills() {
     return this.skillsService.getAllSkills();
   }
 
@@ -31,16 +32,19 @@ export class SkillsController {
     return this.skillsService.getSkillById(+params.id);
   }
 
+  @RequireRole()
   @Post()
   createSkill(@Body() dto: CreateSkillDto) {
     return this.skillsService.createSkillFromDto(dto);
   }
 
+  @RequireRole()
   @Put(':id')
   updateSkill(@Param() params: IdParam, @Body() dto: CreateSkillDto) {
     return this.skillsService.updateSkillById(+params.id, dto);
   }
 
+  @RequireRole()
   @Delete(':id')
   deleteSkill(@Param() params: IdParam) {
     return this.skillsService.deleteSkillById(+params.id);
