@@ -10,8 +10,9 @@ import {
 import { RequiredSkillsService } from './required-skills.service';
 import { IdParam } from 'src/utils/common/ByIdParam';
 import { RequiredSkillDto } from './dto/requreid-skill.dto';
-import { ApiBearerAuth } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiParam } from '@nestjs/swagger';
 import { Public } from '@app/auth/decorators/public.decorator';
+import { RequireRole } from '@app/auth/decorators/require-role.decorator';
 
 @ApiBearerAuth()
 @Controller('required-skills')
@@ -31,11 +32,14 @@ export class RequiredSkillsController {
   }
 
   @Post()
+  @RequireRole()
   async createRequiredSkill(@Body() dto: RequiredSkillDto) {
     return await this.requiredSkillsService.createRequiredSkillFromDto(dto);
   }
 
   @Put(':id')
+  @RequireRole()
+  @ApiParam({ name: 'id', type: Number })
   async updateRequiredSkill(
     @Param() params: IdParam,
     @Body() dto: RequiredSkillDto,
@@ -47,6 +51,8 @@ export class RequiredSkillsController {
   }
 
   @Delete(':id')
+  @RequireRole()
+  @ApiParam({ name: 'id', type: Number })
   async deleteRequiredSkill(@Param() params: IdParam) {
     return await this.requiredSkillsService.deleteRequiredSkillById(params.id);
   }

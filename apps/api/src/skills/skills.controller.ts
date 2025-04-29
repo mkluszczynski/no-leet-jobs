@@ -19,33 +19,33 @@ import { RequireRole } from '@app/auth/decorators/require-role.decorator';
 export class SkillsController {
   constructor(private readonly skillsService: SkillsService) {}
 
-  @Public()
   @Get()
+  @Public()
   getAllSkills() {
     return this.skillsService.getAllSkills();
   }
 
-  @Public()
   @Get(':id')
+  @Public()
   @ApiParam({ name: 'id', type: Number })
   getSkillById(@Param() params: IdParam) {
     return this.skillsService.getSkillById(+params.id);
   }
 
-  @RequireRole()
   @Post()
+  @RequireRole()
   createSkill(@Body() dto: CreateSkillDto) {
     return this.skillsService.createSkillFromDto(dto);
   }
 
-  @RequireRole()
   @Put(':id')
+  @RequireRole()
   updateSkill(@Param() params: IdParam, @Body() dto: CreateSkillDto) {
     return this.skillsService.updateSkillById(+params.id, dto);
   }
 
-  @RequireRole()
   @Delete(':id')
+  @RequireRole()
   deleteSkill(@Param() params: IdParam) {
     return this.skillsService.deleteSkillById(+params.id);
   }

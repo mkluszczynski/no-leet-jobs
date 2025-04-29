@@ -20,6 +20,22 @@ export class JobsService {
     return this.jobsRepository.find();
   }
 
+  async getFullJobById(id: number): Promise<Job> {
+    const job = await this.jobsRepository.findOne({
+      where: { id },
+      relations: {
+        company: true,
+        requiredSkills: true,
+        fieldOfJob: true,
+      },
+    });
+
+    if (!job) {
+      throw new NotFoundException(`Job with ID ${id} not found`);
+    }
+    return job;
+  }
+
   async getJobById(id: number): Promise<Job> {
     const job = await this.jobsRepository.findOne({ where: { id } });
 

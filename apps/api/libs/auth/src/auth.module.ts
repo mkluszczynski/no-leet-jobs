@@ -13,6 +13,8 @@ import { RolesGuard } from './guards/require-role.guard';
 import { ApplicationEditGuard } from './guards/application-edit.guard';
 import { UsersModule } from 'src/users/users.module';
 import { ApplicationsModule } from 'src/applications/applications.module';
+import { ApplicationViewGuard } from './guards/application-view.guard';
+import { JobViewGuard } from './guards/job-view.guard';
 
 @Module({
   imports: [
@@ -40,7 +42,15 @@ import { ApplicationsModule } from 'src/applications/applications.module';
     },
     {
       provide: APP_GUARD,
+      useClass: JobViewGuard,
+    },
+    {
+      provide: APP_GUARD,
       useClass: JobEditGuard,
+    },
+    {
+      provide: APP_GUARD,
+      useClass: ApplicationViewGuard,
     },
     {
       provide: APP_GUARD,

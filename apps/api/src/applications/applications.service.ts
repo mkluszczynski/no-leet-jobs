@@ -15,6 +15,15 @@ export class ApplicationsService {
     return this.applicationRepository.find({});
   }
 
+  async getAllApplicationsByJobId(jobId: number): Promise<Application[]> {
+    return this.applicationRepository.find({
+      where: { job: { id: jobId } },
+      relations: {
+        user: true,
+      },
+    });
+  }
+
   async getApplicationById(id: number): Promise<Application> {
     const application = await this.applicationRepository.findOneBy({ id });
 
@@ -25,12 +34,30 @@ export class ApplicationsService {
     return application;
   }
 
+  async getFullApplicationById(id: number): Promise<Application> {
+    const application = await this.applicationRepository.findOne({
+      where: { id },
+      relations: {
+        job: {
+          company: true,
+          requiredSkills: true,
+          fieldOfJob: true,
+        },
+        user: true,
+      },
+    });
+    if (!application) {
+      throw new NotFoundException(`Application with id ${id} not found`);
+    }
+    return application;
+  }
+
   async createApplicationFromDto(dto: ApplicationDto): Promise<Application> {
     const newApplication = Application.fromDto(dto);
     return this.applicationRepository.save(newApplication);
   }
 
-  async updateApplication(application: Application): Promise<Application> {
+  async saveApplication(application: Application): Promise<Application> {
     return this.applicationRepository.save(application);
   }
 

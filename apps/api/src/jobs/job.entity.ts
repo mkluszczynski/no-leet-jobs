@@ -64,10 +64,9 @@ export class Job {
 
   @JoinColumn()
   @ManyToOne(() => Company, (company) => company.jobs, {
-    nullable: true,
     onDelete: 'CASCADE',
   })
-  company: Company | null;
+  company: Company;
 
   @OneToMany(() => Application, (application) => application.job)
   applications: Application[];

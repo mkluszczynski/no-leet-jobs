@@ -29,6 +29,7 @@ import { TryEmail } from '@app/auth/decorators/try-email.decorator';
 import { ApplicationsService } from 'src/applications/applications.service';
 import { UploadService } from '@lib/upload';
 import { UsersService } from 'src/users/users.service';
+import { AuthorizeJobView } from '@app/auth/decorators/auth-job-view.decorator';
 
 @ApiBearerAuth()
 @Controller('jobs')
@@ -53,6 +54,15 @@ export class JobsController {
   @ApiParam({ name: 'id', type: Number })
   getJobById(@Param() params: IdParam): Promise<Job> {
     return this.jobsService.getJobById(+params.id);
+  }
+
+  @Get(':id/applications')
+  @RequireRole(Role.COMPANY)
+  @AuthorizeJobView()
+  @ApiParam({ name: 'id', type: Number })
+  async getJobApplications(@Param() params: IdParam) {
+    const job = await this.jobsService.getJobById(+params.id);
+    return this.applicationsService.getAllApplicationsByJobId(job.id);
   }
 
   @Post()
@@ -111,7 +121,7 @@ export class JobsController {
     const job = await this.jobsService.getJobById(+params.id);
     newApplication.job = job;
 
-    return this.applicationsService.updateApplication(newApplication);
+    return this.applicationsService.saveApplication(newApplication);
   }
 
   @Put(':id')

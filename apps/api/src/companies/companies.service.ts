@@ -48,6 +48,13 @@ export class CompaniesService {
     return company;
   }
 
+  async tryGetCompanyByEmail(email: string): Promise<Company | null> {
+    if (!email) return null;
+    return this.companyRepository.findOne({
+      where: { account: { email } },
+    });
+  }
+
   async createCompanyFromDtoAndAccount(
     dto: CompanyDto,
     account: Account,
