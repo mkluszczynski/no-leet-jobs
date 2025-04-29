@@ -17,8 +17,11 @@ import { UpdateAccountDto } from './dto/update-account.dto';
 import { HashService } from '@app/hash';
 import { RegisterUserAccountDto } from './dto/register-user-account.dto';
 import { RegisterCompanyAccountDto } from './dto/register-company-account.dto';
-import { ApiBearerAuth } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiParam } from '@nestjs/swagger';
 import { Public } from '@app/auth/decorators/public.decorator';
+import { RequireRole } from '@app/auth/decorators/require-role.decorator';
+import { AuthorizeAccountView } from '@app/auth/decorators/auth-account-view.decorator';
+import { AuthorizeAccountEdit } from '@app/auth/decorators/auth-account-edit.decorator';
 
 @ApiBearerAuth()
 @Controller('accounts')
@@ -31,11 +34,14 @@ export class AccountsController {
   ) {}
 
   @Get()
+  @RequireRole()
   getAllAccounts(): Promise<Account[]> {
     return this.accountsService.getAllAccounts();
   }
 
   @Get(':id')
+  @RequireRole()
+  @AuthorizeAccountView()
   getAccountById(@Param() params: IdParam): Promise<Account> {
     return this.accountsService.getAccountById(params.id);
   }
@@ -61,6 +67,8 @@ export class AccountsController {
   }
 
   @Put(':id')
+  @AuthorizeAccountEdit()
+  @ApiParam({ name: 'id', type: Number })
   async updateAccountById(
     @Param() params: IdParam,
     @Body() dto: UpdateAccountDto,
@@ -73,6 +81,8 @@ export class AccountsController {
   }
 
   @Delete(':id')
+  @AuthorizeAccountEdit()
+  @ApiParam({ name: 'id', type: Number })
   async deleteAccountById(@Param() params: IdParam): Promise<void> {
     await this.accountsService.deleteAccountById(params.id);
   }
