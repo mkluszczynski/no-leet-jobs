@@ -36,10 +36,17 @@ export class Company {
   @Column({ nullable: true })
   website: string | null;
 
-  @Column()
+  @Column({
+    type: 'timestamp',
+    default: () => 'CURRENT_TIMESTAMP',
+  })
   createdAt: Date;
 
-  @Column()
+  @Column({
+    type: 'timestamp',
+    default: () => 'CURRENT_TIMESTAMP',
+    onUpdate: 'CURRENT_TIMESTAMP',
+  })
   updatedAt: Date;
 
   @OneToMany(() => Job, (job) => job.company, { onDelete: 'CASCADE' })
@@ -52,8 +59,6 @@ export class Company {
     company.phoneNumber = dto.phoneNumber || null;
     company.email = dto.email;
     company.website = dto.website || null;
-    company.createdAt = new Date();
-    company.updatedAt = new Date();
     return company;
   }
 
@@ -64,6 +69,5 @@ export class Company {
     this.phoneNumber = dto.phoneNumber || null;
     this.email = dto.email;
     this.website = dto.website || null;
-    this.updatedAt = new Date();
   }
 }

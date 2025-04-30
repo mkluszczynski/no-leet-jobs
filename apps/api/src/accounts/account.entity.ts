@@ -27,7 +27,6 @@ export class Account {
   })
   createdAt: Date;
 
-  // TODO: Refactor cerateAt and updatedAt collumns in other entityes like below VVV
   @Column({
     type: 'timestamp',
     default: () => 'CURRENT_TIMESTAMP',

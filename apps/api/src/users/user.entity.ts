@@ -43,10 +43,17 @@ export class User {
   })
   applications: Application[];
 
-  @Column()
+  @Column({
+    type: 'timestamp',
+    default: () => 'CURRENT_TIMESTAMP',
+  })
   createdAt: Date;
 
-  @Column()
+  @Column({
+    type: 'timestamp',
+    default: () => 'CURRENT_TIMESTAMP',
+    onUpdate: 'CURRENT_TIMESTAMP',
+  })
   updatedAt: Date;
 
   public static fromDto(dto: CreateUserDto): User {
@@ -54,8 +61,6 @@ export class User {
     user.firstName = dto.firstName;
     user.lastName = dto.lastName;
     user.email = dto.email;
-    user.createdAt = new Date();
-    user.updatedAt = new Date();
     return user;
   }
 
@@ -65,6 +70,5 @@ export class User {
     this.email = dto.email || this.email;
     this.phoneNumber = dto.phoneNumber || this.phoneNumber;
     this.isPublic = dto.isPublic !== undefined ? dto.isPublic : this.isPublic;
-    this.updatedAt = new Date();
   }
 }
