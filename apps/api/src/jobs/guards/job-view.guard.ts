@@ -1,19 +1,19 @@
 import { Injectable } from '@nestjs/common';
+import { AuthorizationGuard } from '@app/auth/guards/authorization.guard';
 import { AccountsService } from 'src/accounts/accounts.service';
+import { Reflector } from '@nestjs/core';
 import { Role } from 'src/accounts/enums/role.enum';
 import { CompaniesService } from 'src/companies/companies.service';
 import { JobsService } from 'src/jobs/jobs.service';
-import { AuthorizationGuard } from './edit.guard';
-import { Reflector } from '@nestjs/core';
 
 @Injectable()
-export class JobEditGuard extends AuthorizationGuard {
-  metadataKey: string = 'validateJobCreator';
+export class JobViewGuard extends AuthorizationGuard {
+  metadataKey: string = 'authorizeJobView';
 
   constructor(
-    private jobsService: JobsService,
     private accountsService: AccountsService,
     private companiesService: CompaniesService,
+    private jobsService: JobsService,
     reflector: Reflector,
   ) {
     super(reflector);
@@ -27,18 +27,17 @@ export class JobEditGuard extends AuthorizationGuard {
         return true;
       }
 
-      if (account.role !== Role.COMPANY) {
-        return false;
+      const job = await this.jobsService.getFullJobById(+id);
+      const company =
+        await this.companiesService.getCompanyByAccountEmail(email);
+
+      if (job.company.id === company.id) {
+        return true;
       }
 
-      const job = await this.jobsService.getFullJobById(+id);
-      const company = await this.companiesService.getCompanyByAccountId(
-        account.id,
-      );
-
-      return job.company.id === company.id;
+      return false;
     } catch (error) {
-      console.error('Error in JobAuthorizationGuard:', error);
+      console.error('Error in ApplicationEditGuard:', error);
       return false;
     }
   }

@@ -6,7 +6,7 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { UploadService } from '@lib/upload';
 import { ApiBearerAuth, ApiParam } from '@nestjs/swagger';
 import { RequireRole } from '@app/auth/decorators/require-role.decorator';
-import { AuthorizeUserEdit } from '@app/auth/decorators/auth-user-edit.decorator';
+import { AuthorizeUserEdit } from 'src/users/decorators/auth-user-edit.decorator';
 import { Role } from 'src/accounts/enums/role.enum';
 
 @ApiBearerAuth()

@@ -4,7 +4,7 @@ import { AccountsService } from 'src/accounts/accounts.service';
 import { Role } from 'src/accounts/enums/role.enum';
 import { ApplicationsService } from 'src/applications/applications.service';
 import { UsersService } from 'src/users/users.service';
-import { AuthorizationGuard } from './edit.guard';
+import { AuthorizationGuard } from '@app/auth/guards/authorization.guard';
 
 @Injectable()
 export class ApplicationEditGuard extends AuthorizationGuard {

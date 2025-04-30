@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { AuthorizationGuard } from './edit.guard';
+import { AuthorizationGuard } from '@app/auth/guards/authorization.guard';
 import { AccountsService } from 'src/accounts/accounts.service';
 import { UsersService } from 'src/users/users.service';
 import { ApplicationsService } from 'src/applications/applications.service';

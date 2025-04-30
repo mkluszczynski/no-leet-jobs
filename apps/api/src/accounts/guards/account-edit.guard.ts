@@ -2,11 +2,11 @@ import { Injectable } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { AccountsService } from 'src/accounts/accounts.service';
 import { Role } from 'src/accounts/enums/role.enum';
-import { AuthorizationGuard } from './edit.guard';
+import { AuthorizationGuard } from '@app/auth/guards/authorization.guard';
 
 @Injectable()
-export class AccountViewGuard extends AuthorizationGuard {
-  metadataKey: string = 'authorizeAccountView';
+export class AccountEditGuard extends AuthorizationGuard {
+  metadataKey: string = 'authorizeAccountEdit';
 
   constructor(
     private accountsService: AccountsService,
