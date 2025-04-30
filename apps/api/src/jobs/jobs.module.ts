@@ -9,9 +9,6 @@ import { CompaniesModule } from 'src/companies/companies.module';
 import { UploadModule } from '@lib/upload';
 import { UsersModule } from 'src/users/users.module';
 import { ApplicationsModule } from 'src/applications/applications.module';
-import { APP_GUARD } from '@nestjs/core';
-import { JobViewGuard } from './guards/job-view.guard';
-import { JobEditGuard } from './guards/job-edit.guard';
 
 @Module({
   imports: [
@@ -24,17 +21,7 @@ import { JobEditGuard } from './guards/job-edit.guard';
     UsersModule,
   ],
   controllers: [JobsController],
-  providers: [
-    JobsService,
-    {
-      provide: APP_GUARD,
-      useClass: JobViewGuard,
-    },
-    {
-      provide: APP_GUARD,
-      useClass: JobEditGuard,
-    },
-  ],
+  providers: [JobsService],
   exports: [JobsService],
 })
 export class JobsModule {}

@@ -8,13 +8,18 @@ import {
   ParseFilePipeBuilder,
   Post,
   Put,
-  Req,
+  Query,
   UploadedFile,
   UseInterceptors,
 } from '@nestjs/common';
 import { JobsService } from './jobs.service';
 import { Job } from './job.entity';
-import { ApiBearerAuth, ApiConsumes, ApiParam } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiConsumes,
+  ApiParam,
+  ApiQuery,
+} from '@nestjs/swagger';
 import { JobDto } from './dto/job.dto';
 import { IdParam } from 'src/utils/common/ByIdParam';
 import { AuthorizeJobEdit } from 'src/jobs/decorators/auth-job-edit.decorator';
@@ -30,6 +35,10 @@ import { ApplicationsService } from 'src/applications/applications.service';
 import { UploadService } from '@lib/upload';
 import { UsersService } from 'src/users/users.service';
 import { AuthorizeJobView } from 'src/jobs/decorators/auth-job-view.decorator';
+import { JobQuery } from './types/job-query.type';
+import { EmploymentType } from './enums/employemnt-type.enum';
+import { ExperienceLevel } from './enums/experience-level.enum';
+import { WorkType } from './enums/work-type.enum';
 
 @ApiBearerAuth()
 @Controller('jobs')
@@ -44,9 +53,39 @@ export class JobsController {
 
   @Get()
   @Public()
-  getAllJobs(@Req() req): Promise<Job[]> {
-    console.log('user', req.user);
-    return this.jobsService.getAllJobs();
+  @ApiQuery({ name: 'minSalary', type: Number, required: false })
+  @ApiQuery({ name: 'maxSalary', type: Number, required: false })
+  @ApiQuery({ name: 'workType', enum: WorkType, required: false })
+  @ApiQuery({ name: 'experience', enum: ExperienceLevel, required: false })
+  @ApiQuery({ name: 'employmentType', enum: EmploymentType, required: false })
+  @ApiQuery({ name: 'fieldOfJobId', type: Number, required: false })
+  @ApiQuery({ name: 'requiredSkills', type: String, required: false })
+  @ApiQuery({ name: 'companyId', type: Number, required: false })
+  getAllJobs(
+    @Query('minSalary') minSalary: string | undefined,
+    @Query('maxSalary') maxSalary: string | undefined,
+    @Query('workType') workType: string | undefined,
+    @Query('experience') experience: string | undefined,
+    @Query('employmentType') employmentType: string | undefined,
+    @Query('fieldOfJobId') fieldOfJobId: string | undefined,
+    @Query('requiredSkills') requiredSkills: string | undefined,
+    @Query('companyId') companyId: string | undefined,
+  ): Promise<Job[]> {
+    const jobQuery: JobQuery = {
+      minSalary: minSalary ? +minSalary : undefined,
+      maxSalary: maxSalary ? +maxSalary : undefined,
+      workType: workType ? (workType as WorkType) : undefined,
+      experience: experience ? (experience as ExperienceLevel) : undefined,
+      employmentType: employmentType
+        ? (employmentType as EmploymentType)
+        : undefined,
+      fieldOfJobId: fieldOfJobId ? +fieldOfJobId : undefined,
+      requiredSkills: requiredSkills ? requiredSkills.split(',') : undefined,
+      companyId: companyId ? +companyId : undefined,
+    };
+    console.log('Query:', jobQuery);
+
+    return this.jobsService.getAllJobs(jobQuery);
   }
 
   @Get(':id')

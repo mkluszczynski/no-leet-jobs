@@ -1,11 +1,12 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { Repository } from 'typeorm';
+import { In, LessThan, MoreThan, Repository } from 'typeorm';
 import { Job } from './job.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { JobDto } from './dto/job.dto';
 import { RequiredSkillsService } from 'src/required-skills/required-skills.service';
 import { RequiredSkillDto } from 'src/required-skills/dto/requreid-skill.dto';
 import { FieldsOfJobsService } from 'src/fields-of-jobs/fields-of-jobs.service';
+import { JobQuery } from './types/job-query.type';
 
 @Injectable()
 export class JobsService {
@@ -16,8 +17,37 @@ export class JobsService {
     private readonly fieldOfJobsService: FieldsOfJobsService,
   ) {}
 
-  getAllJobs(): Promise<Job[]> {
-    return this.jobsRepository.find();
+  getAllJobs(query: JobQuery): Promise<Job[]> {
+    return this.jobsRepository.find({
+      where: {
+        // ...parsedQuery,
+        maxSalary: query.maxSalary ? LessThan(query.maxSalary) : undefined,
+        minSalary: query.minSalary ? MoreThan(query.minSalary) : undefined,
+        workType: query.workType,
+        experience: query.experience,
+        employmentType: query.employmentType,
+        requiredSkills: {
+          skill: {
+            id: query.requiredSkills
+              ? In(query.requiredSkills?.map((id) => +id))
+              : undefined,
+          },
+        },
+        fieldOfJob: {
+          id: query.fieldOfJobId,
+        },
+        company: {
+          id: query.companyId,
+        },
+      },
+      relations: {
+        company: true,
+        requiredSkills: {
+          skill: true,
+        },
+        fieldOfJob: true,
+      },
+    });
   }
 
   async getFullJobById(id: number): Promise<Job> {
