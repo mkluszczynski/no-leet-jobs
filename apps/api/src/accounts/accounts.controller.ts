@@ -20,8 +20,8 @@ import { RegisterCompanyAccountDto } from './dto/register-company-account.dto';
 import { ApiBearerAuth, ApiParam } from '@nestjs/swagger';
 import { Public } from '@app/auth/decorators/public.decorator';
 import { RequireRole } from '@app/auth/decorators/require-role.decorator';
-import { AuthorizeAccountView } from '@app/auth/decorators/auth-account-view.decorator';
-import { AuthorizeAccountEdit } from '@app/auth/decorators/auth-account-edit.decorator';
+import { AuthorizeAccountView } from 'src/accounts/decorators/auth-account-view.decorator';
+import { AuthorizeAccountEdit } from 'src/accounts/decorators/auth-account-edit.decorator';
 
 @ApiBearerAuth()
 @Controller('accounts')

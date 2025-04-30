@@ -6,7 +6,7 @@ import { ApiBearerAuth, ApiParam } from '@nestjs/swagger';
 import { Public } from '@app/auth/decorators/public.decorator';
 import { RequireRole } from '@app/auth/decorators/require-role.decorator';
 import { Role } from 'src/accounts/enums/role.enum';
-import { AuthorizeCompanyEdit } from '@app/auth/decorators/auth-company-edit.decorator';
+import { AuthorizeCompanyEdit } from 'src/companies/decorators/auth-company-edit.decorator';
 
 @ApiBearerAuth()
 @Controller('companies')

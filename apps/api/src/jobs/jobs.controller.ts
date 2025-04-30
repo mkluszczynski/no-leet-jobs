@@ -17,7 +17,7 @@ import { Job } from './job.entity';
 import { ApiBearerAuth, ApiConsumes, ApiParam } from '@nestjs/swagger';
 import { JobDto } from './dto/job.dto';
 import { IdParam } from 'src/utils/common/ByIdParam';
-import { AuthorizeJobEdit } from '@app/auth/decorators/auth-job-edit.decorator';
+import { AuthorizeJobEdit } from 'src/jobs/decorators/auth-job-edit.decorator';
 import { Public } from '@app/auth/decorators/public.decorator';
 import { RequireRole } from '@app/auth/decorators/require-role.decorator';
 import { Role } from 'src/accounts/enums/role.enum';
@@ -29,7 +29,7 @@ import { TryEmail } from '@app/auth/decorators/try-email.decorator';
 import { ApplicationsService } from 'src/applications/applications.service';
 import { UploadService } from '@lib/upload';
 import { UsersService } from 'src/users/users.service';
-import { AuthorizeJobView } from '@app/auth/decorators/auth-job-view.decorator';
+import { AuthorizeJobView } from 'src/jobs/decorators/auth-job-view.decorator';
 
 @ApiBearerAuth()
 @Controller('jobs')

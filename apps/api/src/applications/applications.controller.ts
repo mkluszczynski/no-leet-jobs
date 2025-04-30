@@ -5,10 +5,10 @@ import { ApplicationDto } from './dto/application.dto';
 import { ApiBearerAuth, ApiParam } from '@nestjs/swagger';
 import { UploadService } from '@lib/upload';
 import { UsersService } from 'src/users/users.service';
-import { AuthorizeApplicationEdit } from '@app/auth/decorators/auth-application-edit.decorator';
+import { AuthorizeApplicationEdit } from 'src/applications/decorators/auth-application-edit.decorator';
 import { RequireRole } from '@app/auth/decorators/require-role.decorator';
 import { Role } from 'src/accounts/enums/role.enum';
-import { AuthorizeApplicationView } from '@app/auth/decorators/auth-application-view.decorator';
+import { AuthorizeApplicationView } from 'src/applications/decorators/auth-application-view.decorator';
 
 @ApiBearerAuth()
 @Controller('applications')
