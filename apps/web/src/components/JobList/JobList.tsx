@@ -6,9 +6,11 @@ import { ScrollArea } from "../ui/scroll-area";
 
 export function JobList({ jobs }: { jobs: Job[] }) {
   return (
-    <div className="flex h-full w-full flex-col justify-center">
-      <h1 className="ml-4 text-xl font-semibold">Job posts ({jobs.length})</h1>
-      <ScrollArea className="h-full w-full">
+    <div className="flex size-full flex-col justify-center">
+      <div className="px-4 py-2">
+        <h1 className="text-xl font-semibold">Job posts ({jobs.length})</h1>
+      </div>
+      <ScrollArea className="min-h-[calc(100%-4rem)]">
         <div className="flex flex-col gap-2 p-4">
           {jobs.map((job) => (
             <JobListItem key={"job-list-item-" + job.id} job={job} />
