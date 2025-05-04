@@ -10,6 +10,7 @@ import {
   Cloud,
   Coffee,
   FlaskConical,
+  Funnel,
   Gamepad2,
   Gem,
   Hash,
@@ -22,10 +23,16 @@ import {
 } from "lucide-react";
 import { JSX } from "react";
 import { Avatar, AvatarFallback } from "../ui/avatar";
+import { Button } from "../ui/button";
+import { ScrollArea, ScrollBar } from "../ui/scroll-area";
 
 export function NavigationBar() {
   return (
-    <div className="flex min-h-16 w-full items-center justify-center px-4 py-2">
+    <div className="flex min-h-16 w-full items-center justify-between gap-2 py-2 pl-4">
+      <Button>
+        <Funnel />
+        Filters
+      </Button>
       <FieldFilter />
     </div>
   );
@@ -33,34 +40,37 @@ export function NavigationBar() {
 
 function FieldFilter() {
   return (
-    <div className="flex w-full items-center justify-center gap-2">
-      {fieldsMoc.map((field) => (
-        <FieldFilterItem key={field.alias} field={field} />
-      ))}
-    </div>
+    <ScrollArea className="flex w-[calc(100%-8rem)] items-center justify-center">
+      <div className="flex items-center justify-center gap-2">
+        {fieldsMoc.map((field) => (
+          <FieldFilterItem key={field.alias} field={field} />
+        ))}
+        <ScrollBar hidden orientation="horizontal" />
+      </div>
+    </ScrollArea>
   );
 }
 
 function FieldFilterItem({ field }: { field: FieldOfJob }) {
   const fieldIcons: Record<string, { icon: JSX.Element; bg: string }> = {
-    js: { icon: <Braces size={16} />, bg: "bg-yellow-500" },
-    py: { icon: <Turtle size={16} />, bg: "bg-blue-500" },
-    java: { icon: <Coffee size={16} />, bg: "bg-red-500" },
-    csharp: { icon: <Hash size={16} />, bg: "bg-green-500" },
-    cpp: { icon: <CircuitBoard size={16} />, bg: "bg-purple-500" },
-    php: { icon: <House size={16} />, bg: "bg-purple-500" },
-    ruby: { icon: <Gem size={16} />, bg: "bg-pink-500" },
-    go: { icon: <Squirrel size={16} />, bg: "bg-teal-500" },
-    android: { icon: <Smartphone size={16} />, bg: "bg-green-700" },
-    ios: { icon: <Apple size={16} />, bg: "bg-blue-700" },
-    gamedev: { icon: <Gamepad2 size={16} />, bg: "bg-orange-500" },
-    data: { icon: <ChartColumnIncreasing size={16} />, bg: "bg-yellow-600" },
-    ml: { icon: <Bot size={16} />, bg: "bg-indigo-500" },
-    devops: { icon: <Repeat size={16} />, bg: "bg-gray-500" },
-    cloud: { icon: <Cloud size={16} />, bg: "bg-gray-600" },
-    cybersec: { icon: <Shield size={16} />, bg: "bg-red-600" },
-    blockchain: { icon: <Bitcoin size={16} />, bg: "bg-blue-600" },
-    testing: { icon: <FlaskConical size={16} />, bg: "bg-purple-600" },
+    js: { icon: <Braces size={16} />, bg: "bg-yellow-200" },
+    py: { icon: <Turtle size={16} />, bg: "bg-blue-200" },
+    java: { icon: <Coffee size={16} />, bg: "bg-red-200" },
+    csharp: { icon: <Hash size={16} />, bg: "bg-green-200" },
+    cpp: { icon: <CircuitBoard size={16} />, bg: "bg-purple-200" },
+    php: { icon: <House size={16} />, bg: "bg-purple-200" },
+    ruby: { icon: <Gem size={16} />, bg: "bg-pink-200" },
+    go: { icon: <Squirrel size={16} />, bg: "bg-teal-200" },
+    android: { icon: <Smartphone size={16} />, bg: "bg-green-200" },
+    ios: { icon: <Apple size={16} />, bg: "bg-blue-200" },
+    gamedev: { icon: <Gamepad2 size={16} />, bg: "bg-orange-200" },
+    data: { icon: <ChartColumnIncreasing size={16} />, bg: "bg-yellow-200" },
+    ml: { icon: <Bot size={16} />, bg: "bg-indigo-200" },
+    devops: { icon: <Repeat size={16} />, bg: "bg-gray-200" },
+    cloud: { icon: <Cloud size={16} />, bg: "bg-gray-200" },
+    cybersec: { icon: <Shield size={16} />, bg: "bg-red-200" },
+    blockchain: { icon: <Bitcoin size={16} />, bg: "bg-blue-200" },
+    testing: { icon: <FlaskConical size={16} />, bg: "bg-purple-200" },
   };
 
   return (
