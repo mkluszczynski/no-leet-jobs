@@ -33,11 +33,11 @@ export function JobListItem({ job }: { job: Job }) {
             {job.title}
           </div>
           <div className="flex gap-2 text-sm font-bold">
-            <Badge>
+            <Badge variant="outline">
               <Building2 />
               {job.company.name}
             </Badge>
-            <Badge>
+            <Badge variant="secondary">
               <Gauge />
               {job.experience}
             </Badge>
