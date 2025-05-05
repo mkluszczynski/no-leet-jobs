@@ -41,8 +41,8 @@ export function FiltersPopover() {
 }
 
 function SalaryFilter() {
-  const [min, setMin] = useState(5000);
-  const [max, setMax] = useState(8000);
+  const [min, setMin] = useState(10000);
+  const [max, setMax] = useState(15000);
 
   return (
     <div>
@@ -50,7 +50,7 @@ function SalaryFilter() {
         Min. Salary: {min}$ - Max. Salary: {max}$
       </Label>
       <Slider
-        defaultValue={[5000, 1500]}
+        defaultValue={[10000, 15000]}
         min={3000}
         max={40000}
         step={100}
