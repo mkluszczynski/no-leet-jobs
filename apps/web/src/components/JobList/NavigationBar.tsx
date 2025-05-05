@@ -10,7 +10,6 @@ import {
   Cloud,
   Coffee,
   FlaskConical,
-  Funnel,
   Gamepad2,
   Gem,
   Hash,
@@ -23,16 +22,13 @@ import {
 } from "lucide-react";
 import { JSX } from "react";
 import { Avatar, AvatarFallback } from "../ui/avatar";
-import { Button } from "../ui/button";
 import { ScrollArea, ScrollBar } from "../ui/scroll-area";
+import { FiltersPopover } from "./FiltersPopover";
 
 export function NavigationBar() {
   return (
     <div className="flex min-h-16 w-full items-center justify-between gap-2 py-2 pl-4">
-      <Button>
-        <Funnel />
-        Filters
-      </Button>
+      <FiltersPopover />
       <FieldFilter />
     </div>
   );
@@ -40,8 +36,8 @@ export function NavigationBar() {
 
 function FieldFilter() {
   return (
-    <ScrollArea className="flex w-[calc(100%-8rem)] items-center justify-center">
-      <div className="flex items-center justify-center gap-2">
+    <ScrollArea className="flex w-[calc(100%-8rem)] items-end justify-end">
+      <div className="flex items-center justify-end gap-2 px-8">
         {fieldsMoc.map((field) => (
           <FieldFilterItem key={field.alias} field={field} />
         ))}
