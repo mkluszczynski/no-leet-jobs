@@ -4,7 +4,7 @@ import Link from "next/link";
 
 export function Header() {
   return (
-    <div className="flex h-16 w-full items-center justify-center">
+    <div className="flex h-16 w-full items-center justify-center shadow-xs">
       <div className="flex items-center justify-center gap-2">
         <ChartNoAxesGantt />
         <h1 className="text-2xl font-bold">no-leet-jobs</h1>
