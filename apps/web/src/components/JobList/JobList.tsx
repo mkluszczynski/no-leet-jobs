@@ -12,7 +12,7 @@ export function JobList({ jobs }: { jobs: Job[] }) {
         <h1 className="text-xl font-semibold">Job posts ({jobs.length})</h1>
       </div>
       <ScrollArea className="min-h-[calc(100%-4rem)]">
-        <div className="flex flex-col gap-2 p-4">
+        <div className="flex flex-col gap-2 p-4 pt-0">
           {jobs.map((job) => (
             <JobListItem key={"job-list-item-" + job.id} job={job} />
           ))}
