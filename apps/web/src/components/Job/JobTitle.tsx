@@ -3,7 +3,6 @@ import {
   Braces,
   Briefcase,
   Building2,
-  ChevronLeft,
   Coins,
   Handshake,
   Lightbulb,
@@ -15,8 +14,7 @@ import {
   CardHeader,
   CardTitle,
 } from "../ui/card";
-import Link from "next/link";
-import { Button } from "../ui/button";
+import { BackButton } from "../utils/BackButton";
 
 export function JobTitle({ job }: { job: Job }) {
   return (
@@ -27,12 +25,7 @@ export function JobTitle({ job }: { job: Job }) {
             <Braces /> {/* Icon for job title */}
             {job.title}
           </div>
-          <Link href="/" className="fit-content">
-            <Button variant="ghost" className="text-sm">
-              <ChevronLeft />
-              Back
-            </Button>
-          </Link>
+          <BackButton />
         </CardTitle>
         <CardDescription>{job.fieldOfJob.name}</CardDescription>
       </CardHeader>
