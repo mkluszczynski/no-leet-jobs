@@ -3,6 +3,7 @@ import {
   Braces,
   Briefcase,
   Building2,
+  ChevronLeft,
   Coins,
   Handshake,
   Lightbulb,
@@ -14,16 +15,24 @@ import {
   CardHeader,
   CardTitle,
 } from "../ui/card";
+import Link from "next/link";
+import { Button } from "../ui/button";
 
 export function JobTitle({ job }: { job: Job }) {
   return (
     <Card>
       <CardHeader>
-        <CardTitle className="text-2xl font-bold">
-          <div className="flex items-center gap-2">
+        <CardTitle className="flex flex-row justify-between text-2xl font-bold">
+          <div className="flex items-center gap-1">
             <Braces /> {/* Icon for job title */}
             {job.title}
           </div>
+          <Link href="/" className="fit-content">
+            <Button variant="ghost" className="text-sm">
+              <ChevronLeft />
+              Back
+            </Button>
+          </Link>
         </CardTitle>
         <CardDescription>{job.fieldOfJob.name}</CardDescription>
       </CardHeader>
