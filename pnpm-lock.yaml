@@ -188,6 +188,9 @@ importers:
       tw-animate-css:
         specifier: ^1.2.9
         version: 1.2.9
+      validator:
+        specifier: ^13.15.0
+        version: 13.15.0
       zod:
         specifier: ^3.24.4
         version: 3.24.4
@@ -207,6 +210,9 @@ importers:
       '@types/react-dom':
         specifier: ^19
         version: 19.0.4(@types/react@19.0.12)
+      '@types/validator':
+        specifier: ^13.15.0
+        version: 13.15.0
       eslint:
         specifier: ^9
         version: 9.23.0(jiti@2.4.2)
@@ -1551,6 +1557,9 @@ packages:
 
   '@types/validator@13.12.3':
     resolution: {integrity: sha512-2ipwZ2NydGQJImne+FhNdhgRM37e9lCev99KnqkbFHd94Xn/mErARWI1RSLem1QA19ch5kOhzIZd7e8CA2FI8g==}
+
+  '@types/validator@13.15.0':
+    resolution: {integrity: sha512-nh7nrWhLr6CBq9ldtw0wx+z9wKnnv/uTVLA9g/3/TcOYxbpOSZE+MhKPmWqU+K0NvThjhv12uD8MuqijB0WzEA==}
 
   '@types/yargs-parser@21.0.3':
     resolution: {integrity: sha512-I4q9QU9MQv4oEOz4tAHJtNz1cwuLxn2F3xcc2iV5WdqLPpUnj30aUuxt1mAxYTG+oe8CZMV/+6rU4S4gRDzqtQ==}
@@ -6484,6 +6493,8 @@ snapshots:
   '@types/unist@2.0.11': {}
 
   '@types/validator@13.12.3': {}
+
+  '@types/validator@13.15.0': {}
 
   '@types/yargs-parser@21.0.3': {}
 
