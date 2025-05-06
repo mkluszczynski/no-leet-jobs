@@ -16,10 +16,12 @@ export function Header() {
             Log In
           </Button>
         </Link>
-        <Button variant="outline">
-          <MessageSquareWarning />
-          Post Job Offer
-        </Button>
+        <Link href="/company/register">
+          <Button variant="outline">
+            <MessageSquareWarning />
+            Post Job Offer
+          </Button>
+        </Link>
       </div>
     </div>
   );
