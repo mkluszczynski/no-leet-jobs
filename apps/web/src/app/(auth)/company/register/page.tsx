@@ -1,4 +1,4 @@
-import { CompanyRegister } from "@/components/Company/CompanyRegister";
+import { CompanyRegister } from "@/components/Company/register/CompanyRegister";
 
 export default function UserRegisterPage() {
   return (

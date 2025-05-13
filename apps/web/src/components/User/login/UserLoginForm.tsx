@@ -3,9 +3,9 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import { z } from "zod";
-import { Form, FormField } from "../ui/form";
-import { Button } from "../ui/button";
-import { InputFormItem } from "../utils/InputFormField";
+import { Form, FormField } from "../../ui/form";
+import { Button } from "../../ui/button";
+import { InputFormItem } from "../../utils/InputFormField";
 
 const formSchema = z.object({
   email: z.string().email().min(5).max(50),

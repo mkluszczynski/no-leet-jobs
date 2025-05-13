@@ -1,5 +1,5 @@
 import { ChartNoAxesGantt } from "lucide-react";
-import { Card, CardContent, CardFooter, CardHeader } from "../ui/card";
+import { Card, CardContent, CardFooter, CardHeader } from "../../ui/card";
 import { CompanyLoginForm } from "./CompanyLoginForm";
 
 export function CompanyLogin() {

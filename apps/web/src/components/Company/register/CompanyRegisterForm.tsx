@@ -1,20 +1,23 @@
 "use client";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import validator from "validator";
 
 import { z } from "zod";
-import { Form, FormField } from "../ui/form";
-import { Button } from "../ui/button";
-import { InputFormItem } from "../utils/InputFormField";
+import { Form, FormField } from "../../ui/form";
+import { Button } from "../../ui/button";
+import { InputFormItem } from "../../utils/InputFormField";
 
 const formSchema = z.object({
-  firstName: z.string().min(2).max(50),
-  lastName: z.string().min(2).max(50),
+  companyName: z.string().min(2).max(50),
+  address: z.string().min(5).max(100),
   email: z.string().email().min(5).max(50),
+  phoneNumber: z.string().min(10).max(15).refine(validator.isMobilePhone),
+  website: z.string().url().min(5).max(100),
   password: z.string().min(8).max(50),
 });
 
-export function UserRegisterForm() {
+export function CompanyRegisterForm() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -32,23 +35,23 @@ export function UserRegisterForm() {
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
         <FormField
           control={form.control}
-          name="firstName"
+          name="companyName"
           render={({ field }) => (
             <InputFormItem
               field={field}
-              name="First Name"
-              placeholder="Enter your first name"
+              name="Company Name"
+              placeholder="Enter your company name"
             />
           )}
         />
         <FormField
           control={form.control}
-          name="lastName"
+          name="address"
           render={({ field }) => (
             <InputFormItem
               field={field}
-              name="Last Name"
-              placeholder="Enter your last name"
+              name="Address"
+              placeholder="Enter your company address"
             />
           )}
         />
@@ -60,6 +63,28 @@ export function UserRegisterForm() {
               field={field}
               name="Email"
               placeholder="Enter your email"
+            />
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="phoneNumber"
+          render={({ field }) => (
+            <InputFormItem
+              field={field}
+              name="Phone Number"
+              placeholder="Enter your phone number"
+            />
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="website"
+          render={({ field }) => (
+            <InputFormItem
+              field={field}
+              name="Website"
+              placeholder="Enter your company website"
             />
           )}
         />

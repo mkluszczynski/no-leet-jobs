@@ -1,4 +1,4 @@
-import { CompanyLogin } from "@/components/Company/CompanyLogin";
+import { CompanyLogin } from "@/components/Company/login/CompanyLogin";
 
 export default function UserLoginPage() {
   return (

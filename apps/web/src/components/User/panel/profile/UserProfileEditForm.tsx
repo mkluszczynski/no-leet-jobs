@@ -1,28 +1,28 @@
 "use client";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import validator from "validator";
 
 import { z } from "zod";
-import { Form, FormField } from "../ui/form";
-import { Button } from "../ui/button";
-import { InputFormItem } from "../utils/InputFormField";
+import { Form, FormField } from "@/components/ui/form";
+import { InputFormItem } from "@/components/utils/InputFormField";
+import { Button } from "@/components/ui/button";
+import { UserAccount } from "@/lib/types/user-account";
 
 const formSchema = z.object({
-  companyName: z.string().min(2).max(50),
-  address: z.string().min(5).max(100),
+  firstName: z.string().min(2).max(50),
+  lastName: z.string().min(2).max(50),
   email: z.string().email().min(5).max(50),
-  phoneNumber: z.string().min(10).max(15).refine(validator.isMobilePhone),
-  website: z.string().url().min(5).max(100),
-  password: z.string().min(8).max(50),
+  phoneNumber: z.string().optional(),
 });
 
-export function CompanyRegisterForm() {
+export function UserProfileEditForm({ user }: { user: UserAccount }) {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      email: "",
-      password: "",
+      firstName: user.firstName,
+      lastName: user.lastName,
+      email: user.email,
+      phoneNumber: user.phoneNumber || "",
     },
   });
 
@@ -32,26 +32,29 @@ export function CompanyRegisterForm() {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        className="grid grid-cols-2 gap-2 space-y-8"
+      >
         <FormField
           control={form.control}
-          name="companyName"
+          name="firstName"
           render={({ field }) => (
             <InputFormItem
               field={field}
-              name="Company Name"
-              placeholder="Enter your company name"
+              name="First Name"
+              placeholder="Enter your first name"
             />
           )}
         />
         <FormField
           control={form.control}
-          name="address"
+          name="lastName"
           render={({ field }) => (
             <InputFormItem
               field={field}
-              name="Address"
-              placeholder="Enter your company address"
+              name="Last Name"
+              placeholder="Enter your last name"
             />
           )}
         />
@@ -77,30 +80,8 @@ export function CompanyRegisterForm() {
             />
           )}
         />
-        <FormField
-          control={form.control}
-          name="website"
-          render={({ field }) => (
-            <InputFormItem
-              field={field}
-              name="Website"
-              placeholder="Enter your company website"
-            />
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="password"
-          render={({ field }) => (
-            <InputFormItem
-              field={field}
-              name="Password"
-              placeholder="Enter your password"
-            />
-          )}
-        />
-        <Button className="w-full" type="submit">
-          Register
+        <Button className="col-span-2 w-full" type="submit">
+          Save
         </Button>
       </form>
     </Form>
