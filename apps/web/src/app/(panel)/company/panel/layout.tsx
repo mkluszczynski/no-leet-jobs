@@ -10,7 +10,7 @@ export default function PanelLayout({
     <div>
       <SidebarProvider>
         <CompanySidebar />
-        <main>
+        <main className="w-full p-4">
           {/* <SidebarTrigger /> */}
           {children}
         </main>
