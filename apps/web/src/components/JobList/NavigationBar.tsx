@@ -1,3 +1,4 @@
+"use client";
 import { fieldsMoc } from "@/lib/mocs/field-moc";
 import { FieldOfJob } from "@/lib/types/field-of-job";
 import {
@@ -21,13 +22,24 @@ import {
   Turtle,
 } from "lucide-react";
 import { JSX } from "react";
-import { Avatar, AvatarFallback } from "../ui/avatar";
-import { FiltersPopover } from "./FiltersPopover";
+import {
+  EmploymentTypeFilter,
+  ExperienceLevelFilter,
+  SalaryFilter,
+  WorkTypeFilter,
+} from "./FiltersPopover";
+import { Badge } from "../ui/badge";
 
 export function NavigationBar() {
   return (
-    <div className="flex min-h-16 w-full items-center justify-between gap-2 py-2 pl-4">
-      <FiltersPopover />
+    <div className="flex min-h-16 w-full flex-col items-center justify-between gap-2 px-4 py-2 xl:flex-row">
+      {/* <FiltersPopover /> */}
+      <div className="flex flex-wrap items-center justify-center gap-2 xl:justify-start">
+        <SalaryFilter />
+        <WorkTypeFilter hideLabel />
+        <ExperienceLevelFilter hideLabel />
+        <EmploymentTypeFilter hideLabel />
+      </div>
       <FieldFilter />
     </div>
   );
@@ -35,7 +47,7 @@ export function NavigationBar() {
 
 function FieldFilter() {
   return (
-    <div className="flex flex-wrap items-center justify-end gap-2 px-8">
+    <div className="flex flex-wrap items-center justify-center gap-2 xl:max-w-3/5 xl:justify-end">
       {fieldsMoc.map((field) => (
         <FieldFilterItem key={field.alias} field={field} />
       ))}
@@ -71,10 +83,18 @@ const fieldIcons: Record<string, { icon: JSX.Element; bg: string }> = {
 
 function FieldFilterItem({ field }: { field: FieldOfJob }) {
   return (
-    <Avatar className="size-10">
-      <AvatarFallback className={fieldIcons[field.alias]?.bg || "bg-muted"}>
-        {fieldIcons[field.alias]?.icon || "??"}
-      </AvatarFallback>
-    </Avatar>
+    <div className="flex items-center justify-center">
+      <Badge>
+        <div className="flex items-center gap-2">
+          {fieldIcons[field.alias]?.icon || "??"}
+          <span className="text-s">{field.name}</span>
+        </div>
+      </Badge>
+      {/* <Avatar className="size-10">
+        <AvatarFallback className={fieldIcons[field.alias]?.bg || "bg-muted"}>
+          {fieldIcons[field.alias]?.icon || "??"}
+        </AvatarFallback>
+      </Avatar> */}
+    </div>
   );
 }

@@ -13,6 +13,7 @@ import {
   SelectValue,
 } from "../ui/select";
 
+//mobile
 export function FiltersPopover() {
   return (
     <Popover>
@@ -40,15 +41,17 @@ export function FiltersPopover() {
   );
 }
 
-function SalaryFilter() {
+export function SalaryFilter({ hideLabel = false }: { hideLabel?: boolean }) {
   const [min, setMin] = useState(10000);
   const [max, setMax] = useState(15000);
 
   return (
     <div>
-      <Label htmlFor="salary" className="text-sm font-medium">
-        Min. Salary: {min}$ - Max. Salary: {max}$
-      </Label>
+      {!hideLabel && (
+        <Label htmlFor="salary" className="text-sm font-medium">
+          Min. Salary: {min}$ - Max. Salary: {max}$
+        </Label>
+      )}
       <Slider
         defaultValue={[10000, 15000]}
         min={3000}
@@ -63,12 +66,14 @@ function SalaryFilter() {
   );
 }
 
-function WorkTypeFilter() {
+export function WorkTypeFilter({ hideLabel = false }: { hideLabel?: boolean }) {
   return (
     <div>
-      <Label htmlFor="job-type" className="text-sm font-medium">
-        Work Type
-      </Label>
+      {!hideLabel && (
+        <Label htmlFor="job-type" className="text-sm font-medium">
+          Work Type
+        </Label>
+      )}
       <Select>
         <SelectTrigger className="w-[180px]">
           <SelectValue placeholder="Work Type" />
@@ -84,12 +89,18 @@ function WorkTypeFilter() {
   );
 }
 
-function EmploymentTypeFilter() {
+export function EmploymentTypeFilter({
+  hideLabel = false,
+}: {
+  hideLabel?: boolean;
+}) {
   return (
     <div>
-      <Label htmlFor="job-type" className="text-sm font-medium">
-        Employment Type
-      </Label>
+      {!hideLabel && (
+        <Label htmlFor="job-type" className="text-sm font-medium">
+          Employment Type
+        </Label>
+      )}
       <Select>
         <SelectTrigger className="w-[180px]">
           <SelectValue placeholder="Employment Type" />
@@ -104,12 +115,18 @@ function EmploymentTypeFilter() {
   );
 }
 
-function ExperienceLevelFilter() {
+export function ExperienceLevelFilter({
+  hideLabel = false,
+}: {
+  hideLabel?: boolean;
+}) {
   return (
     <div>
-      <Label htmlFor="job-type" className="text-sm font-medium">
-        Experience Level
-      </Label>
+      {!hideLabel && (
+        <Label htmlFor="job-type" className="text-sm font-medium">
+          Experience Level
+        </Label>
+      )}
       <Select>
         <SelectTrigger className="w-[180px]">
           <SelectValue placeholder="Experience Level" />

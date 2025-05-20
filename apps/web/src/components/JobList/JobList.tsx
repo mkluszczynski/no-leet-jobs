@@ -51,7 +51,7 @@ export function JobListItem({ job }: { job: Job }) {
             <div className="text-accent-foreground text-xs font-medium">
               {job.minSalary}$ - {job.maxSalary}$
             </div>
-            <div className="flex gap-2 text-sm font-bold">
+            <div className="flex flex-wrap justify-end gap-2 text-sm font-bold">
               {job.requiredSkills.slice(0, 3).map((skill) => (
                 <Badge key={skill.skill.id}>{skill.skill.name}</Badge>
               ))}
